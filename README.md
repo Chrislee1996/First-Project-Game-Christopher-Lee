@@ -1,6 +1,7 @@
 # Christopher-Lee-Game-Project 
 # "Pacman lite game" 
 - Game will be created using HTML, css, Javascript and canvas 
+-Game will start when players hits the "play game button"
 - Player should be able to move with arrow keys (or WASD keys)
 - Player should NOT be able to collide with walls 
 - Players should be able to collide with 'food' pieces on the board
