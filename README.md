@@ -18,3 +18,22 @@
 - If all food is gone, player wins, ghost disappear 
 - game over - Gameover screen should display total points player has
 - There should be a play again button as well displayed with gameover screen if player wishes to play again 
+
+
+![](images/IMG_1473.jpg)
+>Player should spawn in the game with blocks blocking you in while the enemy will try to chase you down
+
+![](images/IMG_1474.jpg)
+>Players goal is to collect all the balls(maybe gold coins?) while avoiding these ghost. Score with be shown on the right. Bigger balls(coins) will also be spawned and once collected, the ghost may be killed
+
+![](images/IMG_1475.jpg)
+>Players and the enemy are NOT allowed to go through the blocks
+
+![](images/IMG_1476.jpg)
+>If player comes to contact with any ghost, they die
+
+![](images/IMG_1477.jpg)
+>Players are controlled via WASD or arrow keys while ghost have a random path
+
+![](images/IMG_1478.jpg)
+>Game is over once either all balls are collected (which in case will log win message) or player dies (which in case will log lose message). Game over message will indicate player score and an option to play again
