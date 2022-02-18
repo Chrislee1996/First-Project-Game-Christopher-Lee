@@ -1,7 +1,9 @@
 # Christopher-Lee-Game-Project 
 # "Pacman lite game" 
+>You have mysteriously spawned into a random room and hears a voice telling them the only way to get back to reality is to collect all the balls while avoiding the ghost...Can you achieve this goal or will you spend the rest of your life in here?
+
 - Game will be created using HTML, css, Javascript and canvas 
--Game will start when players hits the "play game button"
+- Game will start when players hits the "play game button"
 - Player should be able to move with arrow keys (or WASD keys)
 - Player should NOT be able to collide with walls 
 - Players should be able to collide with 'food' pieces on the board
