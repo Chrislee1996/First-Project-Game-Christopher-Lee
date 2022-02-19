@@ -10,7 +10,8 @@ const ctx = game.getContext('2d')
 game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 
-//Build our player and enemies
+
+//Build our player/enemies and tiles
 //use class to build our pieces as they are the same thing 
 // we could use the class syntax with a constructor
 //x&y are our movement 
@@ -25,28 +26,44 @@ class Piece  {
         this.render = function () {
             // ctx.fillStyle will determine the color(or style) of your element
             ctx.fillStyle = this.color
-            // ctx.fillRect will draw a rectangle on the canvas
+            // ctx.fillRect will draw a rectangle odn the canvas
             ctx.fillRect(this.x, this.y, this.height, this.width)
         }
     }
 }
 
 
-let player = new Piece(10, 10, 'white', 16, 16)
-let enemy1 = new Piece(100, 50, 'blue', 16, 16)
-let enemy2 = new Piece(200, 50, 'green', 16, 16)
-let enemy3 = new Piece(300, 50, 'yellow', 16, 16)
+let player = new Piece(730, 460, 'white', 32, 32)
+let enemy1 = new Piece(100, 60, 'blue', 32, 32)
+let enemy2 = new Piece(730, 900, 'green', 32, 32)
+let enemy3 = new Piece(1250, 60, 'yellow', 32, 32)
+let enemy4 = new Piece(100, 900, 'grey', 32, 32)
+let enemy5 = new Piece(1250, 900, 'orange', 32, 32)
+let enemy6 = new Piece(730, 60, 'red', 32, 32)
 
 
+//build our container/tiles
+let topBoxes = new Piece(0,0,'brown', 1400,30)
+let bottomBoxes = new Piece(0,970,'brown', 1464,30)
+let leftBoxes = new Piece(0,0,'brown', 64,980)
+let rightBoxes = new Piece(1400,0,'brown', 64,980)
+
+let firstBox = new Piece(450,100,'brown', 700,320)
+let secondLine = new Piece(250,150,'brown',1000,30)
+let secondBox = new Piece(440,550,'brown', 620,300)
+let bottomLine = new Piece(120,740,'brown', 1200,30)
 
 //Gameloop will basically let the game playable as its allows us to control our player, what happens 
 //during the game, build our game board 
 const gameLoop = () => {
      // we use clear rect because we're looping, and we want to clear out the old rendering
-  if (enemy1.alive || enemy2.alive || enemy3.alive) {
+  if (enemy1.alive || enemy2.alive || enemy3.alive || enemy4.alive || enemy5.alive || enemy6.alive)  {
         detectHitEnemy1()
-        detectHitEnemy2()
+        detectHitEnemy2() 
         detectHitEnemy3()
+        detectHitEnemy4()
+        detectHitEnemy5()
+        detectHitEnemy6()
   }
       // we use clear rect because we're looping, and we want to clear out the old rendering
   ctx.clearRect(0, 0, game.width, game.height)
@@ -56,6 +73,17 @@ const gameLoop = () => {
    enemy1.render()
    enemy2.render()
    enemy3.render()
+   enemy4.render()
+   enemy5.render()
+   enemy6.render()
+   topBoxes.render()
+   bottomBoxes.render()
+   leftBoxes.render()
+   rightBoxes.render()
+   firstBox.render()
+    secondLine.render()
+   secondBox.render()
+    bottomLine.render()
   }
 }
 
@@ -93,6 +121,46 @@ const detectHitEnemy3 = () => {
             document.getElementById('status').textContent = 'You Lost!'
         }
 }
+
+
+const detectHitEnemy4 = () => {
+    // we need an if statement that clearly defines the moment of collision
+    // that means utilizing the x,y, width, and height of whatever we're detecting
+    if (player.x < enemy4.x + enemy4.width 
+        && player.x + player.width > enemy4.x
+        && player.y < enemy4.y + enemy4.height
+        && player.y + player.height > enemy4.y) {
+            enemy4.alive = false
+            document.getElementById('status').textContent = 'You Lost!'
+        }
+}
+
+const detectHitEnemy5 = () => {
+    // we need an if statement that clearly defines the moment of collision
+    // that means utilizing the x,y, width, and height of whatever we're detecting
+    if (player.x < enemy5.x + enemy5.width 
+        && player.x + player.width > enemy5.x
+        && player.y < enemy5.y + enemy5.height
+        && player.y + player.height > enemy5.y) {
+            enemy5.alive = false
+            document.getElementById('status').textContent = 'You Lost!'
+        }
+}
+
+const detectHitEnemy6 = () => {
+    // we need an if statement that clearly defines the moment of collision
+    // that means utilizing the x,y, width, and height of whatever we're detecting
+    if (player.x < enemy6.x + enemy6.width 
+        && player.x + player.width > enemy6.x
+        && player.y < enemy6.y + enemy6.height
+        && player.y + player.height > enemy6.y) {
+            enemy6.alive = false
+            document.getElementById('status').textContent = 'You Lost!'
+        }
+}
+//movement for enemy
+
+
 //movement for player
 const movementHandler = (e) => {
     // we can use if...else and keycodes to determine player movement
@@ -125,10 +193,10 @@ const movementHandler = (e) => {
 }
 
 
-
 //Build the game board
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', movementHandler)
     setInterval(gameLoop, 60)
 })
+
