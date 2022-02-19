@@ -8,7 +8,7 @@
 - Player should NOT be able to collide with walls 
 - Players should be able to collide with 'food' pieces on the board
 - foods eatten should increase points
-- Goal of game is to eat all the food of the board WITHOUT dying (players will start with 3? lives) 
+- Goal of game is to eat all the food of the board WITHOUT dying
 - Players should be able to collide with ghost however, collision should lead to death and a lost of life 
 - Players lose if a ghost collides with them 
 - game over screen shall display with game over message with total points obtained 
