@@ -48,10 +48,10 @@ let bottomBoxes = new Piece(0,970,'brown', 1464,30)
 let leftBoxes = new Piece(0,0,'brown', 64,980)
 let rightBoxes = new Piece(1400,0,'brown', 64,980)
 
-let firstBox = new Piece(450,100,'brown', 700,320)
-let secondLine = new Piece(250,150,'brown',1000,30)
+let firstBox = new Piece(440,100,'brown', 620,320)
+let firstLine = new Piece(120,150,'brown',1200,32)
 let secondBox = new Piece(440,550,'brown', 620,300)
-let bottomLine = new Piece(120,740,'brown', 1200,30)
+let secondLine = new Piece(120,740,'brown', 1200,30)
 
 //Gameloop will basically let the game playable as its allows us to control our player, what happens 
 //during the game, build our game board 
@@ -81,9 +81,9 @@ const gameLoop = () => {
    leftBoxes.render()
    rightBoxes.render()
    firstBox.render()
-    secondLine.render()
+   firstLine.render()
    secondBox.render()
-    bottomLine.render()
+   secondLine.render()
   }
 }
 
@@ -192,6 +192,7 @@ const movementHandler = (e) => {
     }
 }
 
+//move enemy 
 
 //Build the game board
 
