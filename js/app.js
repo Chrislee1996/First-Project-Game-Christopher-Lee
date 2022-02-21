@@ -2,7 +2,7 @@ const canvas = document.getElementById('canvas')
 // we need to get the game's context, which will allows to specify where to put things and how big to make them
 const ctx = canvas.getContext('2d')
 const score = document.getElementById('score')
-
+const button = document.getElementById('hidden')
 
 //build our gameboard 
 canvas.width = innerWidth
@@ -38,10 +38,12 @@ class Food {
 let points = 0
 const tiles =[]
 const foods = []
+let gameLost = false
+let gameWin = false
+
 //0 = container
 //1 = blank
 //2 = food
-
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
@@ -189,8 +191,7 @@ const enemies = [
 
 // the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
 const gameLoop = () => {
-  
-  requestAnimationFrame(gameLoop)
+  let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
 tiles.forEach((tile) => {
   tile.render()
@@ -211,20 +212,34 @@ tiles.forEach((tile) => {
 foods.forEach((food,index) => {
   food.render()
 //remove food when we touch it 
-  if ((food.position.x - player.position.x &&
-      food.position.y - player.position.y) < food.radius + player.radius)
+  if (food.position.x - player.position.x ,
+      food.position.y - player.position.y < food.radius + player.radius)
     {
       foods.splice(index,1)
       // console.log('this will notify us that we are touching the food')
       //change score whenever food is gone
       points +=5
       score.innerText = points
+      // win condition
+      // console.log('should log win message when everything is collected', 'you win')
+      if (foods.length === 0) {
+        button.style.display === "none"
+          button.style.display = "inline"
+       cancelAnimationFrame(gameAnimation)
+       alert(`You Won!, Final score of ${score.innerText}`)
+      } 
+      //populates button to play game again
+    
+      
     }
 })
 
 
+
+//spawn our player
 player.update()
 
+//spawns our enemies
 enemies.forEach(enemy=> {
   enemy.render()
 })
@@ -234,16 +249,10 @@ enemies2.forEach(enemy=> {
 })
 
 
-
 }
 
 
 
-
-
-
-
-//add playermovement
 
 document.addEventListener('DOMContentLoaded', (e) => {
   gameLoop()
