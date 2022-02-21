@@ -1,6 +1,7 @@
 const canvas = document.getElementById('canvas')
 // we need to get the game's context, which will allows to specify where to put things and how big to make them
 const ctx = canvas.getContext('2d')
+const score = document.getElementById('score')
 
 
 //build our gameboard 
@@ -33,10 +34,14 @@ class Food {
     ctx.closePath()
   }
 }
-
+//create and set our  score var
+let points = 0
+const tiles =[]
+const foods = []
 //0 = container
 //1 = blank
 //2 = food
+
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
@@ -55,8 +60,6 @@ const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ]
 
-const tiles =[]
-const foods = []
 gameBoard.forEach((row, index) => {
   row.forEach((number, j) => {
     switch (number) {
@@ -208,10 +211,14 @@ tiles.forEach((tile) => {
 foods.forEach((food,index) => {
   food.render()
 //remove food when we touch it 
-  if (food.position.x - player.position.x + food.position.x - player.position.x,
-    food.position.y - player.position.y +  food.position.y - player.position.y < food.radius + player.radius) {
+  if ((food.position.x - player.position.x &&
+      food.position.y - player.position.y) < food.radius + player.radius)
+    {
       foods.splice(index,1)
-      console.log('this will notify us that we are touching the food')
+      // console.log('this will notify us that we are touching the food')
+      //change score whenever food is gone
+      points +=5
+      score.innerText = points
     }
 })
 
@@ -229,6 +236,7 @@ enemies2.forEach(enemy=> {
 
 
 }
+
 
 
 

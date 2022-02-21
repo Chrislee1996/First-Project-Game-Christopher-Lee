@@ -19,3 +19,9 @@ h1, h2 {
   border: 2px black solid;
   font-size: 30px;
 }
+
+#score {
+  color: white;
+  font-size: 50px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
