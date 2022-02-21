@@ -128,7 +128,7 @@ class Enemy {
   render() {
     ctx.beginPath()
     ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-    ctx.fillStyle = 'orange'
+    ctx.fillStyle = 'red'
     ctx.fill()
     ctx.closePath()
   }
@@ -166,6 +166,7 @@ const enemies = [
     })
     ]
   
+//remove food when we touch it 
 
 
 
@@ -206,47 +207,48 @@ enemies2.forEach(enemy=> {
 
 }
 
-gameLoop()
 
 
-addEventListener('keydown', ({key}) => {
-  // console.log('should log what key has been pressed via keyboard', key)
-  switch (key) {
-    case 'w' :
-    player.movement.y = -5
-    break
-      case 'a' :
-      player.movement.x = -5
-      break
-        case 's' :
-        player.movement.y = 5
-        break
-          case 'd' :
-          player.movement.x = 5
-          break
-  }
-})
 
-addEventListener('keyup', ({key}) => {
-  // console.log('should log what key has been pressed via keyboard', key)
-  switch (key) {
-    case 'w' :
-    player.movement.y = 0
-    break
-      case 'a' :
-      player.movement.x = 0
-      break
-        case 's' :
-        player.movement.y = 0
-        break
-          case 'd' :
-          player.movement.x = 0
-          break
-  }
-})
 
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
+  gameLoop()
+  addEventListener('keydown', ({key}) => {
+    // console.log('should log what key has been pressed via keyboard', key)
+    switch (key) {
+      case 'w' :
+      player.movement.y = -5
+      break
+        case 'a' :
+        player.movement.x = -5
+        break
+          case 's' :
+          player.movement.y = 5
+          break
+            case 'd' :
+            player.movement.x = 5
+            break
+    }
+  })
+  
+  addEventListener('keyup', ({key}) => {
+    // console.log('should log what key has been pressed via keyboard', key)
+    switch (key) {
+      case 'w' :
+      player.movement.y = 0
+      break
+        case 'a' :
+        player.movement.x = 0
+        break
+          case 's' :
+          player.movement.y = 0
+          break
+            case 'd' :
+            player.movement.x = 0
+            break
+    }
+  })
   
 })
