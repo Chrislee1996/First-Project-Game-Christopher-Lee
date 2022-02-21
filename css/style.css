@@ -1,47 +1,16 @@
 body {
-    background-color: rgb(32, 30, 30);
-    text-align: center;
-    background-size: cover;
-    background-repeat: space;
+  text-align: center;
+  background-size: cover;
+  background-repeat: space;
+  background-color: rgb(16, 21, 26);
 }
-  
-  
- h1, h2 {
-    font-size: 30px;
-    color: rgb(155, 43, 9);
-  }
-  
-  canvas {
-    background-color: #222;
 
-  }
-  
 
-  
-  /* #top-left, #top-right, #btm-left, #btm-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(53, 47, 47);
-  } */
-  
+h1, h2 {
+  font-size: 30px;
+  color: rgb(155, 43, 9);
+}
 
-  
-  /* #top-right {
-    grid-area: top-right;
-  }
-  
-  main {
-    grid-area: game;
-  }
-  
-  
-  #btm-left {
-    grid-area: btm-left;
-
-  }
-  
-  #btm-right {
-    grid-area: btm-right;
-  } */
-
+#canvas {
+  background-color: rgb(17, 16, 16);
+}

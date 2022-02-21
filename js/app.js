@@ -1,203 +1,252 @@
-// console.log('hello world')
-const game = document.getElementById('canvas')
-const movement = document.getElementById('movement')
-const score = document.getElementById('score')
-const ctx = game.getContext('2d')
-
-// now we can set some attributes to our game,
-// to set height and width based on COMPUTED STYLE
-// basically it means reading how it's displaying in the current state in the browser.
-game.setAttribute('width', getComputedStyle(game)['width'])
-game.setAttribute('height', getComputedStyle(game)['height'])
+const canvas = document.getElementById('canvas')
+const ctx = canvas.getContext('2d')
 
 
-//Build our player/enemies and tiles
-//use class to build our pieces as they are the same thing 
-// we could use the class syntax with a constructor
-//x&y are our movement 
-class Piece  {
-    constructor(x,y,color,height,width) {
-        this.x = x,
-        this.y = y,
-        this.color = color,
-        this.height = height,
-        this.width = width,
-        this.alive = true,
-        this.render = function () {
-            // ctx.fillStyle will determine the color(or style) of your element
-            ctx.fillStyle = this.color
-            // ctx.fillRect will draw a rectangle odn the canvas
-            ctx.fillRect(this.x, this.y, this.height, this.width)
-        }
-    }
-}
+//build our gameboard 
+canvas.width = innerWidth
+canvas.height =innerHeight 
 
-
-let player = new Piece(730, 460, 'white', 32, 32)
-let enemy1 = new Piece(100, 60, 'blue', 32, 32)
-let enemy2 = new Piece(730, 900, 'green', 32, 32)
-let enemy3 = new Piece(1250, 60, 'yellow', 32, 32)
-let enemy4 = new Piece(100, 900, 'grey', 32, 32)
-let enemy5 = new Piece(1250, 900, 'orange', 32, 32)
-let enemy6 = new Piece(730, 60, 'red', 32, 32)
-
-
-//build our container/tiles
-let topBoxes = new Piece(0,0,'brown', 1400,30)
-let bottomBoxes = new Piece(0,970,'brown', 1464,30)
-let leftBoxes = new Piece(0,0,'brown', 64,980)
-let rightBoxes = new Piece(1400,0,'brown', 64,980)
-
-let firstBox = new Piece(440,100,'brown', 620,320)
-let firstLine = new Piece(120,150,'brown',1200,32)
-let secondBox = new Piece(440,550,'brown', 620,300)
-let secondLine = new Piece(120,740,'brown', 1200,30)
-
-//Gameloop will basically let the game playable as its allows us to control our player, what happens 
-//during the game, build our game board 
-const gameLoop = () => {
-     // we use clear rect because we're looping, and we want to clear out the old rendering
-  if (enemy1.alive || enemy2.alive || enemy3.alive || enemy4.alive || enemy5.alive || enemy6.alive)  {
-        detectHitEnemy1()
-        detectHitEnemy2() 
-        detectHitEnemy3()
-        detectHitEnemy4()
-        detectHitEnemy5()
-        detectHitEnemy6()
+class Board {
+  constructor({position}) {
+    this.position = position
+    this.width = 60
+    this.height = 60
   }
-      // we use clear rect because we're looping, and we want to clear out the old rendering
-  ctx.clearRect(0, 0, game.width, game.height)
-  movement.textContent = player.x + ', ' + player.y
-  player.render()
-  if (enemy1.alive || enemy2|| enemy3 ) {
-   enemy1.render()
-   enemy2.render()
-   enemy3.render()
-   enemy4.render()
-   enemy5.render()
-   enemy6.render()
-   topBoxes.render()
-   bottomBoxes.render()
-   leftBoxes.render()
-   rightBoxes.render()
-   firstBox.render()
-   firstLine.render()
-   secondBox.render()
-   secondLine.render()
+  render() {
+    ctx.fillStyle = 'blue'
+    ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
   }
 }
 
-const detectHitEnemy1 = () => {
-    // we need an if statement that clearly defines the moment of collision
-    // that means utilizing the x,y, width, and height of whatever we're detecting
-    if (player.x < enemy1.x + enemy1.width 
-        && player.x + player.width > enemy1.x
-        && player.y < enemy1.y + enemy1.height
-        && player.y + player.height > enemy1.y) {
-            enemy1.alive = false
-            document.getElementById('status').textContent = 'You Lost!'
-        }
-}
-const detectHitEnemy2 = () => {
-    // we need an if statement that clearly defines the moment of collision
-    // that means utilizing the x,y, width, and height of whatever we're detecting
-    if (player.x < enemy2.x + enemy2.width 
-        && player.x + player.width > enemy2.x
-        && player.y < enemy2.y + enemy2.height
-        && player.y + player.height > enemy2.y) {
-            enemy2.alive = false
-            document.getElementById('status').textContent = 'You Lost!'
-        }
-}
-
-const detectHitEnemy3 = () => {
-    // we need an if statement that clearly defines the moment of collision
-    // that means utilizing the x,y, width, and height of whatever we're detecting
-    if (player.x < enemy3.x + enemy3.width 
-        && player.x + player.width > enemy3.x
-        && player.y < enemy3.y + enemy3.height
-        && player.y + player.height > enemy3.y) {
-            enemy3.alive = false
-            document.getElementById('status').textContent = 'You Lost!'
-        }
+//add our points/food
+class Food {
+  constructor({position}) {
+    this.position = position
+    this.radius = 10
+  }
+  render() {
+    ctx.beginPath()
+    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    ctx.fillStyle = 'white'
+    ctx.fill()
+    ctx.closePath()
+  }
 }
 
 
-const detectHitEnemy4 = () => {
-    // we need an if statement that clearly defines the moment of collision
-    // that means utilizing the x,y, width, and height of whatever we're detecting
-    if (player.x < enemy4.x + enemy4.width 
-        && player.x + player.width > enemy4.x
-        && player.y < enemy4.y + enemy4.height
-        && player.y + player.height > enemy4.y) {
-            enemy4.alive = false
-            document.getElementById('status').textContent = 'You Lost!'
-        }
-}
+const gameBoard = [
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+  [0,1,1,1,1,2,2,0,0,0,0,1,2,2,1,1,1,0],
+  [0,1,2,2,0,0,0,0,0,0,0,0,0,0,1,2,1,0],
+  [0,1,2,0,1,1,1,0,0,0,0,1,1,1,0,1,2,0],
+  [0,1,2,1,1,2,2,1,0,0,1,1,2,2,1,1,2,0],
+  [0,1,2,2,2,2,2,2,1,1,1,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,0,0,0,0,0,0,1,2,2,2,2,0],
+  [0,1,2,2,2,0,0,0,0,0,0,0,0,1,2,2,2,0],
+  [0,1,2,2,2,1,0,0,0,0,0,0,1,1,2,2,2,0],
+  [0,1,2,2,2,2,1,1,1,1,1,1,1,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+]
 
-const detectHitEnemy5 = () => {
-    // we need an if statement that clearly defines the moment of collision
-    // that means utilizing the x,y, width, and height of whatever we're detecting
-    if (player.x < enemy5.x + enemy5.width 
-        && player.x + player.width > enemy5.x
-        && player.y < enemy5.y + enemy5.height
-        && player.y + player.height > enemy5.y) {
-            enemy5.alive = false
-            document.getElementById('status').textContent = 'You Lost!'
-        }
-}
-
-const detectHitEnemy6 = () => {
-    // we need an if statement that clearly defines the moment of collision
-    // that means utilizing the x,y, width, and height of whatever we're detecting
-    if (player.x < enemy6.x + enemy6.width 
-        && player.x + player.width > enemy6.x
-        && player.y < enemy6.y + enemy6.height
-        && player.y + player.height > enemy6.y) {
-            enemy6.alive = false
-            document.getElementById('status').textContent = 'You Lost!'
-        }
-}
-//movement for enemy
-
-
-//movement for player
-const movementHandler = (e) => {
-    // we can use if...else and keycodes to determine player movement
-    // keycodes refer to specific keyboard keys with a number
-    // if we want to use WASD the key codes are as follows:
-    // w=87, a=65, s=83, d=68
-    // up=38, down=40, left=37, right=39
-    // we can also use a switch case which can be handy when we have multiple possibilities
-    // switch case has a main switch, cases(which are our inputs in this instance)
-    // we also need to break out of our cases, using the keyword break
-    switch (e.keyCode) {
-        case (87):
-            // we'll move the player up
-            player.y -= 10
-            // then break the case
-            break
-        case (65):
-            // move the player left
-            player.x -= 10
-            break
-        case (83):
-            // move player down
-            player.y += 10
-            break
-        case (68):
-            // move the player right
-            player.x += 10
-            break
+const tiles =[]
+const foods = []
+gameBoard.forEach((row, index) => {
+  row.forEach((number, j) => {
+    switch (number) {
+      case 0:
+        tiles.push(new Board({
+          position: {
+            x: 60 * j,
+            y: 60 * index
+          }
+        })
+      )
+        break
+          case 2:
+            foods.push(new Food({
+              position: {
+                x: 60 * j,
+                y: 60 * index
+              }
+            })
+          )
+          break
     }
-}
-
-//move enemy 
-
-//Build the game board
-
-document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('keydown', movementHandler)
-    setInterval(gameLoop, 60)
+  })
 })
 
+
+
+
+//create our player
+class Player {
+  constructor({position,movement}) {
+    this.position = position
+    this.movement = movement
+    this.radius = 20
+  }
+
+  render() {
+    ctx.beginPath()
+    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    ctx.fillStyle = 'yellow'
+    ctx.fill()
+    ctx.closePath()
+  }
+  update() {
+    this.render()
+    this.position.x += this.movement.x
+    this.position.y += this.movement.y
+  }
+
+}
+
+
+const player = new Player({
+  position: {
+    x:90,
+    y:90
+  } ,
+  movement: {
+    x:0,
+    y:0
+  }
+})
+
+//add our enemies
+class Enemy {
+  constructor({position,movement,color}) {
+    this.position = position
+    this.movement = movement
+    this.radius = 20
+    this.color = color
+  }
+  render() {
+    ctx.beginPath()
+    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    ctx.fillStyle = 'orange'
+    ctx.fill()
+    ctx.closePath()
+  }
+  update() {
+    this.render()
+    this.position.x += this.movement.x
+    this.position.y += this.movement.y
+  }
+}
+
+
+const enemies = [
+  new Enemy({
+    position: {
+      x:200,
+      y:200
+    },
+    movement: {
+      x:0,
+      y:0
+    }
+  })
+  ]
+
+  const enemies2 = [
+    new Enemy({
+      position: {
+        x:500,
+        y:500
+      },
+      movement: {
+        x:0,
+        y:0
+      }
+    })
+    ]
+  
+
+
+
+
+
+//add playermovement
+
+const gameLoop = () => {
+  
+  requestAnimationFrame(gameLoop)
+  ctx.clearRect(0,0, canvas.width, canvas.height)
+tiles.forEach((tile) => {
+  tile.render()
+
+  if (player.position.y - player.radius + player.movement.y <= tile.position.y + tile.height 
+    && player.position.x + player.radius + player.movement.x >= tile.position.x 
+    && player.position.y + player.radius +player.movement.y>= tile.position.y 
+    && player.position.x - player.radius + player.movement.x<= tile.position.x + tile.width) {
+      console.log('this should log if we are touching a wall')
+      player.movement.x = 0
+      player.movement.y =0
+    }
+
+})
+foods.forEach((food) => {
+  food.render()
+})
+
+player.update()
+
+enemies.forEach(enemy=> {
+  enemy.render()
+})
+
+enemies2.forEach(enemy=> {
+  enemy.render()
+})
+
+}
+
+gameLoop()
+
+
+addEventListener('keydown', ({key}) => {
+  // console.log('should log what key has been pressed via keyboard', key)
+  switch (key) {
+    case 'w' :
+    player.movement.y = -5
+    break
+      case 'a' :
+      player.movement.x = -5
+      break
+        case 's' :
+        player.movement.y = 5
+        break
+          case 'd' :
+          player.movement.x = 5
+          break
+  }
+})
+
+addEventListener('keyup', ({key}) => {
+  // console.log('should log what key has been pressed via keyboard', key)
+  switch (key) {
+    case 'w' :
+    player.movement.y = 0
+    break
+      case 'a' :
+      player.movement.x = 0
+      break
+        case 's' :
+        player.movement.y = 0
+        break
+          case 'd' :
+          player.movement.x = 0
+          break
+  }
+})
+
+
+
+document.addEventListener('DOMContentLoaded', (e) => {
+  
+})
