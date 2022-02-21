@@ -33,7 +33,9 @@ class Food {
   }
 }
 
-
+//0 = container
+//1 = blank
+//2 = food
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
@@ -191,9 +193,18 @@ tiles.forEach((tile) => {
     }
 
 })
+
+
+
 foods.forEach((food) => {
   food.render()
+
+  if (food.position.x - player.position.x &&
+    food.position.y - player.position.y < food.radius + player.radius) {
+      console.log('eat')
+    }
 })
+
 
 player.update()
 
@@ -206,7 +217,6 @@ enemies2.forEach(enemy=> {
 })
 
 }
-
 
 
 
