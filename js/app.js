@@ -143,8 +143,8 @@ class Enemy {
 const enemies = [
   new Enemy({
     position: {
-      x:200,
-      y:200
+      x:880,
+      y:820
     },
     movement: {
       x:0,
@@ -156,13 +156,13 @@ const enemies = [
   const enemies2 = [
     new Enemy({
       position: {
-        x:500,
-        y:500
+        x:980,
+        y:820
       },
       movement: {
         x:0,
         y:0
-      }
+      },
     })
     ]
   
