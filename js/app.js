@@ -212,10 +212,11 @@ tiles.forEach((tile) => {
 foods.forEach((food,index) => {
   food.render()
 //remove food when we touch it 
-  if (food.position.x - player.position.x ,
-      food.position.y - player.position.y < food.radius + player.radius)
+  if (((food.position.x - player.position.x)*(food.position.x - player.position.x )) + (( food.position.y - player.position.y)*( food.position.y - player.position.y)) < 
+  (food.radius + player.radius) * (food.radius + player.radius))
+      
     {
-      foods.splice(index,1)
+      foods.splice(index, 1)
       // console.log('this will notify us that we are touching the food')
       //change score whenever food is gone
       points +=5
@@ -242,15 +243,18 @@ player.update()
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.render()
+  
+
 })
 
-enemies2.forEach(enemy=> {
-  enemy.render()
+enemies2.forEach(enemy2=> {
+  enemy2.render()
+
 })
+
 
 
 }
-
 
 
 
