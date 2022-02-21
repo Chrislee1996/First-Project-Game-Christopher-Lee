@@ -96,6 +96,7 @@ class Player {
     this.position = position
     this.movement = movement
     this.radius = 20
+    this.alive = true
   }
 
   render() {
@@ -244,17 +245,39 @@ player.update()
 enemies.forEach(enemy=> {
   enemy.render()
   
+  if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
+  (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
+    // console.log('this should log a message when we touch an enemy','you lost')
+    button.style.display === "none"
+    button.style.display = "inline"
+    cancelAnimationFrame(gameAnimation)
+    alert(`Oh no, you died!, Final score of ${score.innerText}`)
+  }
 
 })
 
 enemies2.forEach(enemy2=> {
   enemy2.render()
 
+  if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
+  (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
+    // console.log('this should log a message when we touch an enemy', 'you lost')
+    button.style.display === "none"
+    button.style.display = "inline"
+    cancelAnimationFrame(gameAnimation)
+    alert(`Oh no, you died!, Final score of ${score.innerText}`)
+  }
+
 })
 
 
 
 }
+
+
+
+
+
 
 
 
