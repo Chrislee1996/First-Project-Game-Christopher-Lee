@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas')
+// we need to get the game's context, which will allows to specify where to put things and how big to make them
 const ctx = canvas.getContext('2d')
 
 
@@ -18,7 +19,7 @@ class Board {
   }
 }
 
-//add our points/food
+//add our points/food -since our food will be the same shape as our player , we can copy and paste it - change color/size
 class Food {
   constructor({position}) {
     this.position = position
@@ -84,7 +85,7 @@ gameBoard.forEach((row, index) => {
 
 
 
-//create our player
+//create our player -use the class syntax with a constructor
 class Player {
   constructor({position,movement}) {
     this.position = position
@@ -119,7 +120,15 @@ const player = new Player({
   }
 })
 
-//add our enemies
+//need to add moveset for our AI
+const computerMovement = {
+  up:0,
+  down:1,
+  left:2,
+  right:3
+}
+
+//add our enemies - same constructors as our player but will have different color 
 class Enemy {
   constructor({position,movement,color}) {
     this.position = position
@@ -168,14 +177,14 @@ const enemies = [
     })
     ]
   
-//remove food when we touch it 
 
 
 
 
 
-//add playermovement
 
+
+// the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
 const gameLoop = () => {
   
   requestAnimationFrame(gameLoop)
@@ -196,12 +205,13 @@ tiles.forEach((tile) => {
 
 
 
-foods.forEach((food) => {
+foods.forEach((food,index) => {
   food.render()
-
-  if (food.position.x - player.position.x &&
-    food.position.y - player.position.y < food.radius + player.radius) {
-      console.log('eat')
+//remove food when we touch it 
+  if (food.position.x - player.position.x + food.position.x - player.position.x,
+    food.position.y - player.position.y +  food.position.y - player.position.y < food.radius + player.radius) {
+      foods.splice(index,1)
+      console.log('this will notify us that we are touching the food')
     }
 })
 
@@ -216,12 +226,16 @@ enemies2.forEach(enemy=> {
   enemy.render()
 })
 
+
+
 }
 
 
 
 
 
+
+//add playermovement
 
 document.addEventListener('DOMContentLoaded', (e) => {
   gameLoop()

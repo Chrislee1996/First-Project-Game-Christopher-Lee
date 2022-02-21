@@ -1,7 +1,6 @@
 body {
   text-align: center;
-  background-size: cover;
-  background-repeat: space;
+
   background-color: rgb(16, 21, 26);
 }
 
@@ -13,4 +12,10 @@ h1, h2 {
 
 #canvas {
   background-color: rgb(17, 16, 16);
+}
+
+#status{
+  background-color: rgb(16, 21, 26);
+  border: 2px black solid;
+  font-size: 30px;
 }
