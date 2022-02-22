@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d')
 const score = document.getElementById('score')
 const button = document.getElementById('hidden')
 
+
 //build our gameboard 
 canvas.width = innerWidth
 canvas.height =innerHeight 
@@ -14,7 +15,7 @@ class Board {
     this.width = 60
     this.height = 60
   }
-  render() {
+  render = function() {
     ctx.fillStyle = 'blue'
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
   }
@@ -26,7 +27,7 @@ class Food {
     this.position = position
     this.radius = 10
   }
-  render() {
+  render = function() {
     ctx.beginPath()
     ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
     ctx.fillStyle = 'white'
@@ -38,8 +39,7 @@ class Food {
 let points = 0
 const tiles =[]
 const foods = []
-let gameLost = false
-let gameWin = false
+
 
 //0 = container
 //1 = blank
@@ -88,25 +88,22 @@ gameBoard.forEach((row, index) => {
 })
 
 
-
-
 //create our player -use the class syntax with a constructor
 class Player {
   constructor({position,movement}) {
     this.position = position
     this.movement = movement
     this.radius = 20
-    this.alive = true
   }
 
-  render() {
+  render = function() {
     ctx.beginPath()
     ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
     ctx.fillStyle = 'yellow'
     ctx.fill()
     ctx.closePath()
   }
-  update() {
+  update = function() {
     this.render()
     this.position.x += this.movement.x
     this.position.y += this.movement.y
@@ -134,27 +131,51 @@ const computerMovement = {
   right:3
 }
 
+
+
 //add our enemies - same constructors as our player but will have different color 
 class Enemy {
-  constructor({position,movement,color}) {
+  constructor({position,color}) {
     this.position = position
-    this.movement = movement
+    this.movement = Math.floor(Math.random() * Object.keys(computerMovement).length)
+    this.directionTimer = this.random(10,50)
     this.radius = 20
     this.color = color
   }
-  render() {
+  render = function() {
     ctx.beginPath()
     ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
     ctx.fillStyle = 'red'
     ctx.fill()
     ctx.closePath()
   }
-  update() {
+  update = function() {
     this.render()
     this.position.x += this.movement.x
     this.position.y += this.movement.y
   }
+  random = function (min,max) {
+    return Math.floor(Math.random() * (max-min+1)) + min 
+  }
+  move = function() {
+    switch (this.computerMovement) {
+      case computerMovement.up:
+        this.y -= 5;
+        break;
+      case computerMovement.down:
+        this.y += 5;
+        break;
+      case computerMovement.left:
+        this.x -= 5;
+        break;
+      case computerMovement.right:
+        this.x += 5;
+        break;
+    }
+  }
 }
+
+
 
 
 const enemies = [
@@ -186,15 +207,11 @@ const enemies = [
 
 
 
-
-
-
-
 // the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
 const gameLoop = () => {
   let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
-tiles.forEach((tile) => {
+  tiles.forEach((tile) => {
   tile.render()
 
   if (player.position.y - player.radius + player.movement.y <= tile.position.y + tile.height 
@@ -202,6 +219,7 @@ tiles.forEach((tile) => {
     && player.position.y + player.radius +player.movement.y>= tile.position.y 
     && player.position.x - player.radius + player.movement.x<= tile.position.x + tile.width) {
       console.log('this should log if we are touching a wall')
+      
       player.movement.x = 0
       player.movement.y =0
     }
@@ -214,10 +232,9 @@ foods.forEach((food,index) => {
   food.render()
 //remove food when we touch it 
   if (((food.position.x - player.position.x)*(food.position.x - player.position.x )) + (( food.position.y - player.position.y)*( food.position.y - player.position.y)) < 
-  (food.radius + player.radius) * (food.radius + player.radius))
-      
-    {
+  (food.radius + player.radius) * (food.radius + player.radius)) {
       foods.splice(index, 1)
+    
       // console.log('this will notify us that we are touching the food')
       //change score whenever food is gone
       points +=5
@@ -253,9 +270,7 @@ enemies.forEach(enemy=> {
     cancelAnimationFrame(gameAnimation)
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
   }
-
 })
-
 enemies2.forEach(enemy2=> {
   enemy2.render()
 
@@ -267,11 +282,7 @@ enemies2.forEach(enemy2=> {
     cancelAnimationFrame(gameAnimation)
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
   }
-
 })
-
-
-
 }
 
 
