@@ -154,34 +154,35 @@ class Enemy {
 
 
 
-
 // the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
 const gameLoop = () => {
-  const enemies = [
-    new Enemy({
-      position: {
-        x:880,
-        y:820
-      },
-      movement: {
-        x:0,
-        y:0
-      }
-    })
-  ]
-  
-  const enemies2 = [
-    new Enemy({
-      position: {
-        x:980,
-        y:820
-      },
-      movement: {
-        x:0,
-        y:0
-      },
-    })
-  ]
+
+const enemies = [
+  new Enemy({
+    position: {
+      x:880,
+      y:820
+    },
+    movement: {
+      x:0,
+      y:0
+    }
+  })
+]
+
+const enemies2 = [
+  new Enemy({
+    position: {
+      x:980,
+      y:820
+    },
+    movement: {
+      x:0,
+      y:0
+    },
+  })
+]
+
 
   let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
@@ -231,7 +232,7 @@ player.update()
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.render()
-  
+
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy','you lost')
@@ -244,6 +245,8 @@ enemies.forEach(enemy=> {
 enemies2.forEach(enemy2=> {
   enemy2.render()
 
+  
+
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
   (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy', 'you lost')
@@ -254,6 +257,10 @@ enemies2.forEach(enemy2=> {
   }
 })
 }
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', (e) => {
   gameLoop()
