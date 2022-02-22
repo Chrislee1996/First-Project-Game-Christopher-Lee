@@ -9,6 +9,8 @@ const button = document.getElementById('hidden')
 canvas.width = innerWidth
 canvas.height =innerHeight 
 
+
+
 class Board {
   constructor({position}) {
     this.position = position
@@ -124,21 +126,13 @@ const player = new Player({
 })
 
 //need to add moveset for our AI
-const computerMovement = {
-  up:0,
-  down:1,
-  left:2,
-  right:3
-}
-
 
 
 //add our enemies - same constructors as our player but will have different color 
 class Enemy {
-  constructor({position,color}) {
+  constructor({position,color,movement}) {
     this.position = position
-    this.movement = Math.floor(Math.random() * Object.keys(computerMovement).length)
-    this.directionTimer = this.random(10,50)
+    this.movement = movement
     this.radius = 20
     this.color = color
   }
@@ -154,43 +148,28 @@ class Enemy {
     this.position.x += this.movement.x
     this.position.y += this.movement.y
   }
-  random = function (min,max) {
-    return Math.floor(Math.random() * (max-min+1)) + min 
-  }
-  move = function() {
-    switch (this.computerMovement) {
-      case computerMovement.up:
-        this.y -= 5;
-        break;
-      case computerMovement.down:
-        this.y += 5;
-        break;
-      case computerMovement.left:
-        this.x -= 5;
-        break;
-      case computerMovement.right:
-        this.x += 5;
-        break;
-    }
-  }
 }
 
 
 
 
-const enemies = [
-  new Enemy({
-    position: {
-      x:880,
-      y:820
-    },
-    movement: {
-      x:0,
-      y:0
-    }
-  })
-  ]
 
+
+// the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
+const gameLoop = () => {
+  const enemies = [
+    new Enemy({
+      position: {
+        x:880,
+        y:820
+      },
+      movement: {
+        x:0,
+        y:0
+      }
+    })
+  ]
+  
   const enemies2 = [
     new Enemy({
       position: {
@@ -202,13 +181,8 @@ const enemies = [
         y:0
       },
     })
-    ]
-  
+  ]
 
-
-
-// the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
-const gameLoop = () => {
   let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
   tiles.forEach((tile) => {
@@ -225,8 +199,6 @@ const gameLoop = () => {
     }
 
 })
-
-
 
 foods.forEach((food,index) => {
   food.render()
@@ -252,8 +224,6 @@ foods.forEach((food,index) => {
       
     }
 })
-
-
 
 //spawn our player
 player.update()
@@ -284,13 +254,6 @@ enemies2.forEach(enemy2=> {
   }
 })
 }
-
-
-
-
-
-
-
 
 document.addEventListener('DOMContentLoaded', (e) => {
   gameLoop()
