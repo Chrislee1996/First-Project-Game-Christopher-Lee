@@ -151,12 +151,6 @@ class Enemy {
 }
 
 
-
-
-
-// the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
-const gameLoop = () => {
-
 const enemies = [
   new Enemy({
     position: {
@@ -183,7 +177,9 @@ const enemies2 = [
   })
 ]
 
-
+// the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
+const gameLoop = () => {
+  
   let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
   tiles.forEach((tile) => {
@@ -232,6 +228,7 @@ player.update()
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.render()
+
 
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
