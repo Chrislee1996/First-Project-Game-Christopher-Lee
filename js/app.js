@@ -126,7 +126,8 @@ const player = new Player({
 })
 
 //need to add moveset for our AI
-
+let dx = 2
+let dy = 2
 
 //add our enemies - same constructors as our player but will have different color 
 class Enemy {
@@ -142,6 +143,8 @@ class Enemy {
     ctx.fillStyle = 'red'
     ctx.fill()
     ctx.closePath()
+    this.position.x +=dx
+    this.position.y +=dy
   }
   update = function() {
     this.render()
@@ -159,7 +162,7 @@ const enemies = [
     },
     movement: {
       x:0,
-      y:0
+      y:-5
     }
   })
 ]
@@ -189,7 +192,7 @@ const gameLoop = () => {
     && player.position.x + player.radius + player.movement.x >= tile.position.x 
     && player.position.y + player.radius +player.movement.y>= tile.position.y 
     && player.position.x - player.radius + player.movement.x<= tile.position.x + tile.width) {
-      console.log('this should log if we are touching a wall')
+      // console.log('this should log if we are touching a wall')
       
       player.movement.x = 0
       player.movement.y =0
@@ -228,6 +231,30 @@ player.update()
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.render()
+  //this will notify AI that they are touching a wall 
+   tiles.forEach((tile) => {
+    tile.render()
+    if (enemy.position.y - enemy.radius + enemy.movement.y <= tile.position.y + tile.height 
+      && enemy.position.x + enemy.radius + enemy.movement.x >= tile.position.x 
+      && enemy.position.y + enemy.radius +enemy.movement.y>= tile.position.y 
+      && enemy.position.x - enemy.radius + enemy.movement.x<= tile.position.x + tile.width) {
+        //  console.log('this should log if the AI touches a wall')
+        enemy.movement.x = 0
+        enemy.movement.y =0
+
+        if( enemy.position.x  + dx > tile.width + enemy.radius ||  enemy.position.x  + dx < enemy.radius) {
+          dx = -dx;
+      }
+        if(enemy.position.y + dy > tile.height + enemy.radius || enemy.position.y + dy < enemy.radius) {
+          dy = -dy;
+      }
+
+      }
+  
+      
+      
+
+  })
 
 
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
@@ -239,8 +266,24 @@ enemies.forEach(enemy=> {
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
   }
 })
+
+
 enemies2.forEach(enemy2=> {
   enemy2.render()
+  //this will notify AI that they are touching a wall 
+  tiles.forEach((tile) => {
+    tile.render()
+    if (enemy2.position.y - enemy2.radius + enemy2.movement.y <= tile.position.y + tile.height 
+      && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
+      && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
+      && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
+        // console.log('this should log if the AI touches a wall')
+        enemy2.movement.x = 0
+        enemy2.movement.y = 0
+      }
+  
+
+  })
 
   
 
