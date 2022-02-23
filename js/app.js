@@ -243,8 +243,7 @@ const gameLoop = () => {
         player.movement.y =0
       }
   })
-//spawn our player
-player.update() 
+
   
 foods.forEach((food,index) => {
   food.render()
@@ -272,22 +271,25 @@ foods.forEach((food,index) => {
     }
 })
 
+//spawn our player
+player.update() 
+
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.update()
   //this will prevent the ghost from colliding via the walls 
-  tiles.forEach((tile) => {
-    tile.render()
-      if (enemy.position.y - enemy.radius + enemy.movement.y <= tile.position.y + tile.height 
-      && enemy.position.x + enemy.radius + enemy.movement.x >= tile.position.x 
-      && enemy.position.y + enemy.radius +enemy.movement.y>= tile.position.y 
-      && enemy.position.x - enemy.radius + enemy.movement.x<= tile.position.x + tile.width) {
-        console.log('ghost x coordinates', enemy.movement.x)
-        console.log('ghost y coordinates', enemy.movement.y)
-        enemy.movement.x = Math.random() * 2;
-        enemy.movement.y = Math.random() * 2;
-      }
-  })
+  // tiles.forEach((tile) => {
+  //   tile.render()
+  //     if (enemy.position.y - enemy.radius + enemy.movement.y <= tile.position.y + tile.height 
+  //     && enemy.position.x + enemy.radius + enemy.movement.x >= tile.position.x 
+  //     && enemy.position.y + enemy.radius +enemy.movement.y>= tile.position.y 
+  //     && enemy.position.x - enemy.radius + enemy.movement.x<= tile.position.x + tile.width) {
+  //       console.log('ghost x coordinates', enemy.movement.x)
+  //       console.log('ghost y coordinates', enemy.movement.y)
+  //       enemy.movement.x = Math.random() * 2;
+  //       enemy.movement.y = Math.random() * 2;
+  //     }
+  // })
 
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
@@ -306,16 +308,16 @@ enemies2.forEach(enemy2=> {
   enemy2.update()
 
  //this will prevent the ghost from colliding via the walls 
-  tiles.forEach((tile) => {
-    tile.render()
-      if (enemy2.position.y - enemy2.radius + enemy2.movement.y <= tile.position.y + tile.height 
-      && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
-      && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
-      && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
-        enemy2.movement.x = Math.random() * 2;
-        enemy2.movement.y = Math.random() * 2;
-      }
-  })
+  // tiles.forEach((tile) => {
+  //   tile.render()
+  //     if (enemy2.position.y - enemy2.radius + enemy2.movement.y <= tile.position.y + tile.height 
+  //     && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
+  //     && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
+  //     && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
+  //       enemy2.movement.x = Math.random() * 2;
+  //       enemy2.movement.y = Math.random() * 2;
+  //     }
+  // })
 
 
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
