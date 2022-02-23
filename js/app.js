@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
   gameLoop()
   addEventListener('keydown', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
-    switch (key) {
+    switch (key.toLowerCase()) {
       case 'w' :
         player.movement.y = -5
           break
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
   })
   addEventListener('keyup', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
-    switch (key) {
+    switch (key.toLowerCase()) {
       case 'w' :
       player.movement.y = 0
         break
