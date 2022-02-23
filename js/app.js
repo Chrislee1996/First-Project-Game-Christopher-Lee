@@ -16,12 +16,10 @@ class Board {
     this.position = position
     this.width = 60
     this.height = 60
-  
   }
   render = function() {
     ctx.fillStyle = 'blue'
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
-
   }
 }
 
@@ -30,7 +28,6 @@ class Food {
   constructor({position}) {
     this.position = position
     this.radius = 5
-
   }
   render = function() {
     ctx.beginPath()
@@ -106,7 +103,6 @@ class Player {
     this.winSound = new Audio('sounds/winSound.wav')
     this.bumpSound = new Audio('sounds/bump.wav')
   }
-
   render = function() {
     ctx.save()
     ctx.beginPath()
@@ -123,9 +119,8 @@ class Player {
     if (this.rad < 0 || this.rad > .75) this.mouth = -this.mouth
     this.rad += this.mouth
   }
-
 }
-
+//end of player class
 
 const player = new Player({
   position: {
@@ -149,7 +144,6 @@ class Enemy {
     this.radius = 20
     this.color = color
     this.movement = movement
-
   }
   render = function() {
     ctx.beginPath()
@@ -164,28 +158,19 @@ class Enemy {
     } else {
       this.position.x -=1
     }
-
     if (diffY > 0) {
       this.position.y +=1
     } else {
       this.position.y -=1
     }
-
-
   }
   update = function() {
     this.render()
     this.position.x += this.movement.x
     this.position.y += this.movement.y
-
   }
-
 }
-
-
-
-
-
+//end of enemy class
 
 const enemies = [
   new Enemy({
@@ -218,44 +203,39 @@ const enemies2 = [
 const gameLoop = () => {
   let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
+  
   tiles.forEach((tile) => {
-  tile.render()
-
-  if (player.position.y - player.radius + player.movement.y <= tile.position.y + tile.height 
-    && player.position.x + player.radius + player.movement.x >= tile.position.x 
-    && player.position.y + player.radius +player.movement.y>= tile.position.y 
-    && player.position.x - player.radius + player.movement.x<= tile.position.x + tile.width) {
+    tile.render()
+      if (player.position.y - player.radius + player.movement.y <= tile.position.y + tile.height 
+      && player.position.x + player.radius + player.movement.x >= tile.position.x 
+      && player.position.y + player.radius +player.movement.y>= tile.position.y 
+      && player.position.x - player.radius + player.movement.x<= tile.position.x + tile.width) {
       // console.log('this should log if we are touching a wall')
-      player.bumpSound.play()
-      player.movement.x = 0
-      player.movement.y =0
-    }
-
-})
+        player.bumpSound.play()
+        player.movement.x = 0
+        player.movement.y =0
+      }
+  })
 
 foods.forEach((food,index) => {
-  
   food.render()
-//remove food when we touch it 
-  if (((food.position.x - player.position.x)*(food.position.x - player.position.x )) + (( food.position.y - player.position.y)*( food.position.y - player.position.y)) < 
-  (food.radius + player.radius) * (food.radius + player.radius)) {
+    //remove food when we touch it 
+    if (((food.position.x - player.position.x)*(food.position.x - player.position.x )) + (( food.position.y - player.position.y)*( food.position.y - player.position.y)) < 
+    (food.radius + player.radius) * (food.radius + player.radius)) {
       foods.splice(index, 1)
       player.collectSound.play()
-      
       // console.log('this will notify us that we are touching the food')
-      //change score whenever food is gone
       points +=5
       score.innerText = points
-     
       // win condition
       // console.log('should log win message when everything is collected', 'you win')
        if (foods.length === 0) {
          player.winSound.play()
-        button.style.display === "none"
+          button.style.display === "none"
           button.style.display = "inline"
        cancelAnimationFrame(gameAnimation)
        alert(`You Won!, Final score of ${score.innerText}`)
-      } 
+         } 
       //populates button to play game again
     }
 })
@@ -263,7 +243,6 @@ foods.forEach((food,index) => {
 //spawn our player
 player.update() 
   
-
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.update()
@@ -278,9 +257,7 @@ enemies.forEach(enemy=> {
         enemy.movement.x = 0
         enemy.movement.y = 0
       }
-
   })
-
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy','you lost'
@@ -289,7 +266,6 @@ enemies.forEach(enemy=> {
     player.deathSound.play()
     cancelAnimationFrame(gameAnimation)
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
-   
   }
 })
 
@@ -307,8 +283,6 @@ enemies2.forEach(enemy2=> {
         enemy2.movement.x = 0
         enemy2.movement.y = 0
      }
-
-
   })
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
   (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
@@ -317,9 +291,7 @@ enemies2.forEach(enemy2=> {
     button.style.display = "inline"
     player.deathSound.play()
     cancelAnimationFrame(gameAnimation)
-
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
-
   }
 })
 
@@ -332,44 +304,39 @@ enemies2.forEach(enemy2=> {
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
-  
   gameLoop()
-
-
   addEventListener('keydown', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
     switch (key) {
       case 'w' :
-      player.movement.y = -5
-      break
-        case 'a' :
-        player.movement.x = -5
-        break
-          case 's' :
-          player.movement.y = 5
+        player.movement.y = -5
           break
-            case 'd' :
-            player.movement.x = 5
-            break
+      case 'a' :
+        player.movement.x = -5
+          break
+      case 's' :
+        player.movement.y = 5
+          break
+        case 'd' :
+        player.movement.x = 5
+          break
     }
   })
-  
   addEventListener('keyup', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
     switch (key) {
       case 'w' :
       player.movement.y = 0
-      break
-        case 'a' :
-        player.movement.x = 0
         break
-          case 's' :
-          player.movement.y = 0
-          break
-            case 'd' :
-            player.movement.x = 0
-            break
+      case 'a' :
+      player.movement.x = 0
+        break
+      case 's' :
+      player.movement.y = 0
+        break
+      case 'd' :
+      player.movement.x = 0
+        break
     }
   })
-  
 })
