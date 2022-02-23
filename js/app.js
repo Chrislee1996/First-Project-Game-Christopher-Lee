@@ -114,6 +114,7 @@ class Player {
     this.radius = 20
     this.rad = .75
     this.mouth = .040
+    this.rotation=0
     this.collectSound = new Audio('sounds/collectSound.wav')
     this.deathSound = new Audio('sounds/deathSound.wav')
     this.winSound = new Audio('sounds/winSound.wav')
@@ -121,8 +122,12 @@ class Player {
   }
   render = function() {
     ctx.save()
+    ctx.translate(this.position.x, this.position.y)
+    ctx.rotate(this.rotation)
+    ctx.translate(-this.position.x, -this.position.y)
     ctx.beginPath()
     ctx.arc(this.position.x, this.position.y, this.radius, this.rad, Math.PI * 2 - this.rad)
+    ctx.restore()
     ctx.lineTo(this.position.x, this.position.y)
     ctx.fillStyle = 'yellow'
     ctx.fill()
@@ -180,6 +185,7 @@ class Enemy {
       this.position.y -=1
     }
   }
+  
     //if the png for our ghost were to be deleted, this will server as a temp. backup (will appear as balls)
     // ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
     // ctx.fillStyle = 'red'
@@ -208,8 +214,8 @@ const enemies = [
 const enemies2 = [
   new Enemy({
     position: {
-      x:200,
-      y:800
+      x:700,
+      y:100
     },
     movement: {
       x: 0,
@@ -237,6 +243,7 @@ const gameLoop = () => {
         player.movement.y =0
       }
   })
+
 
 foods.forEach((food,index) => {
   food.render()
@@ -278,7 +285,6 @@ enemies.forEach(enemy=> {
   }
 })
 
-
 enemies2.forEach(enemy2=> {
   enemy2.update()
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
@@ -291,8 +297,10 @@ enemies2.forEach(enemy2=> {
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
   }
 })
-
-
+  if      (player.movement.x > 0) player.rotation = 0 
+  else if (player.movement.x < 0) player.rotation = Math.PI
+  else if (player.movement.y > 0) player.rotation = Math.PI/2
+  else if (player.movement.y < 0) player.rotation = Math.PI*1.5
 }
 //end of game loop
 
