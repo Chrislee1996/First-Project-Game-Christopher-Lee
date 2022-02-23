@@ -146,9 +146,10 @@ const player = new Player({
 class Enemy {
   constructor({position,color,movement}) {
     this.position = position
-    this.movement = movement
     this.radius = 20
     this.color = color
+    this.movement = movement
+
   }
   render = function() {
     ctx.beginPath()
@@ -156,7 +157,6 @@ class Enemy {
     ctx.fillStyle = 'red'
     ctx.fill()
     ctx.closePath()
-    // this.position.x = Math.random() * canvas.width
     let diffX = player.position.x - this.position.x
     let diffY = player.position.y - this.position.y
     if (diffX > 0) {
@@ -172,16 +172,20 @@ class Enemy {
     }
 
 
-
   }
   update = function() {
-    
     this.render()
     this.position.x += this.movement.x
     this.position.y += this.movement.y
+
   }
 
 }
+
+
+
+
+
 
 const enemies = [
   new Enemy({
@@ -190,8 +194,8 @@ const enemies = [
       y:820
     },
     movement: {
-      x:0,
-      y:0
+      x: 0,
+      y: 0
     }
   })
 ]
@@ -203,7 +207,7 @@ const enemies2 = [
       y:800
     },
     movement: {
-      x:0,
+      x: 0,
       y:0
     },
   })
@@ -212,7 +216,6 @@ const enemies2 = [
 
 // the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
 const gameLoop = () => {
- 
   let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
   tiles.forEach((tile) => {
@@ -263,7 +266,7 @@ player.update()
 
 //spawns our enemies
 enemies.forEach(enemy=> {
-  enemy.render()
+  enemy.update()
   //this will notify AI that they are touching a wall 
    tiles.forEach((tile) => {
     tile.render()
@@ -274,9 +277,8 @@ enemies.forEach(enemy=> {
         //  console.log('this should log if the AI touches a wall')
         enemy.movement.x = 0
         enemy.movement.y = 0
-
       }
-  
+
   })
 
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
@@ -293,20 +295,18 @@ enemies.forEach(enemy=> {
 
 
 enemies2.forEach(enemy2=> {
-  enemy2.render()
+  enemy2.update()
   //this will notify AI that they are touching a wall 
   tiles.forEach((tile) => {
-    
     tile.render()
     if (enemy2.position.y - enemy2.radius + enemy2.movement.y <= tile.position.y + tile.height 
       && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
       && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
       && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
-        console.log('this should log if the AI touches a wall')
+        // console.log('this should log if the AI touches a wall')
         enemy2.movement.x = 0
         enemy2.movement.y = 0
-      }
-
+     }
 
 
   })
@@ -327,9 +327,15 @@ enemies2.forEach(enemy2=> {
 }
 //end of game loop
 
+
+
+
+
 document.addEventListener('DOMContentLoaded', (e) => {
   
   gameLoop()
+
+
   addEventListener('keydown', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
     switch (key) {
@@ -367,4 +373,3 @@ document.addEventListener('DOMContentLoaded', (e) => {
   })
   
 })
-
