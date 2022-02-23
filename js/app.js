@@ -4,7 +4,7 @@ const instructions = document.getElementById('instructions')
 const ctx = canvas.getContext('2d')
 const score = document.getElementById('score')
 const button = document.getElementById('hidden')
-
+const intro = document.querySelector('.intro')
 
 //build our gameboard 
 canvas.width = innerWidth
@@ -120,6 +120,7 @@ class Player {
     this.deathSound = new Audio('sounds/deathSound.wav')
     this.winSound = new Audio('sounds/winSound.wav')
     this.bumpSound = new Audio('sounds/bump.wav')
+    this.gameSound = new Audio('sounds/bump.wav')
   }
   render = function() {
     ctx.save()
@@ -185,8 +186,8 @@ class Enemy {
     } else {
       this.position.y -=1
     }
-  }
-  
+
+  }  
     //if the png for our ghost were to be deleted, this will server as a temp. backup (will appear as balls)
     // ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
     // ctx.fillStyle = 'red'
@@ -215,8 +216,8 @@ const enemies = [
 const enemies2 = [
   new Enemy({
     position: {
-      x:700,
-      y:100
+      x:200,
+      y:800
     },
     movement: {
       x: 0,
@@ -263,10 +264,10 @@ foods.forEach((food,index) => {
           button.style.display === "none"
           button.style.display = "inline"
           instructions.innerText= 'You Won!'
-       cancelAnimationFrame(gameAnimation)
-       alert(`You Won!, Final score of ${score.innerText}`)
-       instructions.innerText= 'Congratulations! You won!'
-       document.appendChild(instructions)
+          cancelAnimationFrame(gameAnimation)
+          alert(`You Won!, Final score of ${score.innerText}`)
+          instructions.innerText= 'Congratulations! You won!'
+          document.appendChild(instructions)
          } 
       //populates button to play game again
     }
@@ -317,6 +318,11 @@ enemies2.forEach(enemy2=> {
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
+ 
+  alert("When ready, click play!")
+  setInterval(() => {
+    intro.classList.add('display-none')
+  },1)
   gameLoop()
   addEventListener('keydown', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
@@ -353,5 +359,3 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   })
 })
-
-
