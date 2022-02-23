@@ -12,29 +12,35 @@ canvas.height =innerHeight
 
 
 class Board {
-  constructor({position}) {
+  constructor({position,image}) {
     this.position = position
     this.width = 60
     this.height = 60
+    this.image = image
   }
   render = function() {
-    ctx.fillStyle = 'blue'
-    ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+    ctx.drawImage(this.image, this.position.x,this.position.y)
+    //if the png for our bricks/walls are gone, this will server as a backup
+    // ctx.fillStyle = 'blue'
+    // ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
   }
 }
 
 //add our points/food -since our food will be the same shape as our player , we can copy and paste it - change color/size
 class Food {
-  constructor({position}) {
+  constructor({position,image}) {
     this.position = position
-    this.radius = 5
+    this.radius = 10
+    this.image = image
   }
   render = function() {
     ctx.beginPath()
-    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-    ctx.fillStyle = 'white'
+    ctx.drawImage(this.image, this.position.x,this.position.y)
     ctx.fill()
     ctx.closePath()
+    //if png for the coins is gone - back-up will be available via ctx arc/fillstyle
+    // ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    // ctx.fillStyle = 'white'
   }
 }
 //create and set our  score var
@@ -55,7 +61,7 @@ const gameBoard = [
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -63,6 +69,14 @@ const gameBoard = [
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ]
+const coin = new Image()
+coin.src='images/coin.png'
+
+const bricks = new Image()
+bricks.src = 'images/bricks.png'
+
+const ghosts = new Image()
+ghosts.src = 'images/ghost.png'
 
 gameBoard.forEach((row, index) => {
   row.forEach((number, j) => {
@@ -73,6 +87,7 @@ gameBoard.forEach((row, index) => {
             x: 60 * j,
             y: 60 * index
           },
+          image: bricks
         })
       )
         break
@@ -81,7 +96,8 @@ gameBoard.forEach((row, index) => {
               position: {
                 x: 60 * j,
                 y: 60 * index
-              }
+              },
+              image: coin
             })
           )
           break
@@ -139,16 +155,16 @@ const player = new Player({
 
 //add our enemies - same constructors as our player but will have different color 
 class Enemy {
-  constructor({position,color,movement}) {
+  constructor({position,color,movement,image}) {
     this.position = position
-    this.radius = 20
+    this.radius = 10
     this.color = color
     this.movement = movement
+    this.image = image
   }
   render = function() {
+    ctx.drawImage(this.image, this.position.x,this.position.y)
     ctx.beginPath()
-    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-    ctx.fillStyle = 'red'
     ctx.fill()
     ctx.closePath()
     let diffX = player.position.x - this.position.x
@@ -164,6 +180,9 @@ class Enemy {
       this.position.y -=1
     }
   }
+    //if the png for our ghost were to be deleted, this will server as a temp. backup (will appear as balls)
+    // ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    // ctx.fillStyle = 'red'
   update = function() {
     this.render()
     this.position.x += this.movement.x
@@ -181,7 +200,8 @@ const enemies = [
     movement: {
       x: 0,
       y: 0
-    }
+    },
+    image: ghosts
   })
 ]
 
@@ -195,6 +215,7 @@ const enemies2 = [
       x: 0,
       y:0
     },
+    image: ghosts
   })
 ]
 
@@ -225,7 +246,7 @@ foods.forEach((food,index) => {
       foods.splice(index, 1)
       player.collectSound.play()
       // console.log('this will notify us that we are touching the food')
-      points +=5
+      points +=10
       score.innerText = points
       // win condition
       // console.log('should log win message when everything is collected', 'you win')
@@ -246,18 +267,6 @@ player.update()
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.update()
-  //this will notify AI that they are touching a wall 
-   tiles.forEach((tile) => {
-    tile.render()
-    if (enemy.position.y - enemy.radius + enemy.movement.y <= tile.position.y + tile.height 
-      && enemy.position.x + enemy.radius + enemy.movement.x >= tile.position.x 
-      && enemy.position.y + enemy.radius +enemy.movement.y>= tile.position.y 
-      && enemy.position.x - enemy.radius + enemy.movement.x<= tile.position.x + tile.width) {
-        //  console.log('this should log if the AI touches a wall')
-        enemy.movement.x = 0
-        enemy.movement.y = 0
-      }
-  })
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy','you lost'
@@ -272,18 +281,6 @@ enemies.forEach(enemy=> {
 
 enemies2.forEach(enemy2=> {
   enemy2.update()
-  //this will notify AI that they are touching a wall 
-  tiles.forEach((tile) => {
-    tile.render()
-    if (enemy2.position.y - enemy2.radius + enemy2.movement.y <= tile.position.y + tile.height 
-      && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
-      && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
-      && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
-        // console.log('this should log if the AI touches a wall')
-        enemy2.movement.x = 0
-        enemy2.movement.y = 0
-     }
-  })
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
   (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy', 'you lost')
