@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas')
+const instructions = document.getElementById('instructions')
 // we need to get the game's context, which will allows to specify where to put things and how big to make them
 const ctx = canvas.getContext('2d')
 const score = document.getElementById('score')
@@ -30,7 +31,7 @@ class Board {
 class Food {
   constructor({position,image}) {
     this.position = position
-    this.radius = 10
+    this.radius = 15
     this.image = image
   }
   render = function() {
@@ -238,6 +239,7 @@ const gameLoop = () => {
       && player.position.y + player.radius +player.movement.y>= tile.position.y 
       && player.position.x - player.radius + player.movement.x<= tile.position.x + tile.width) {
       // console.log('this should log if we are touching a wall')
+      instructions.innerText= 'You Won!'
         player.bumpSound.play()
         player.movement.x = 0
         player.movement.y =0
@@ -263,6 +265,8 @@ foods.forEach((food,index) => {
           button.style.display = "inline"
        cancelAnimationFrame(gameAnimation)
        alert(`You Won!, Final score of ${score.innerText}`)
+       instructions.innerText= 'Congratulations! You won!'
+       document.appendChild(instructions)
          } 
       //populates button to play game again
     }
@@ -282,6 +286,8 @@ enemies.forEach(enemy=> {
     player.deathSound.play()
     cancelAnimationFrame(gameAnimation)
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
+    instructions.innerText= 'You Lost, Better luck next time!'
+    document.appendChild(instructions)
   }
 })
 
@@ -295,6 +301,8 @@ enemies2.forEach(enemy2=> {
     player.deathSound.play()
     cancelAnimationFrame(gameAnimation)
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
+    instructions.innerText= 'You Lost, Better luck next time!'
+    document.appendChild(instructions)
   }
 })
   if      (player.movement.x > 0) player.rotation = 0 
