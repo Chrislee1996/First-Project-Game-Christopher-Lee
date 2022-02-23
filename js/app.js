@@ -120,7 +120,6 @@ class Player {
     this.deathSound = new Audio('sounds/deathSound.wav')
     this.winSound = new Audio('sounds/winSound.wav')
     this.bumpSound = new Audio('sounds/bump.wav')
-    this.gameSound = new Audio('sounds/bump.wav')
   }
   render = function() {
     ctx.save()
@@ -186,7 +185,6 @@ class Enemy {
     } else {
       this.position.y -=1
     }
-
   }  
     //if the png for our ghost were to be deleted, this will server as a temp. backup (will appear as balls)
     // ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
@@ -232,7 +230,7 @@ const enemies2 = [
 const gameLoop = () => {
   let gameAnimation = requestAnimationFrame(gameLoop)
   ctx.clearRect(0,0, canvas.width, canvas.height)
-  
+  //prevents player from going in the walls 
   tiles.forEach((tile) => {
     tile.render()
       if (player.position.y - player.radius + player.movement.y <= tile.position.y + tile.height 
@@ -245,8 +243,9 @@ const gameLoop = () => {
         player.movement.y =0
       }
   })
-
-
+//spawn our player
+player.update() 
+  
 foods.forEach((food,index) => {
   food.render()
     //remove food when we touch it 
@@ -273,9 +272,6 @@ foods.forEach((food,index) => {
     }
 })
 
-//spawn our player
-player.update() 
-  
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.update()
