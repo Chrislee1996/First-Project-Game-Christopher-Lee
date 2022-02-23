@@ -10,10 +10,11 @@
 <body>
 
     <div id="container">
+        <div id="startScreen">
         <aside id="top-left"><h2>Pac Man</h2></aside>
         <aside id="top-right"><h2 id="movement"></h2></aside>
         <span><h2>  Score: </h2>   <span id ='score'>0</span> </span>
-        <h3 id="instructions"> Instructions, collect all the coins while avoiding the ghost! Use WASD to move your player</h3>
+        <h3 id="instructions"> Instructions: collect all the coins while avoiding the ghost! Use WASD to move your player</h3>
         <main>
             <button onClick="window.location.href=window.location.href" id = 'hidden'>Play again</button>
             <canvas id="canvas" ></canvas>
@@ -21,6 +22,7 @@
         </main>
 
       </div>
+    </div>
       <audio id="load" src="start.png"></audio>
     <script src="js/app.js"></script>
 </body>

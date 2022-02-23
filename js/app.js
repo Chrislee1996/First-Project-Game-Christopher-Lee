@@ -31,7 +31,7 @@ class Board {
 class Food {
   constructor({position,image}) {
     this.position = position
-    this.radius = 15
+    this.radius = 12
     this.image = image
   }
   render = function() {
@@ -239,7 +239,6 @@ const gameLoop = () => {
       && player.position.y + player.radius +player.movement.y>= tile.position.y 
       && player.position.x - player.radius + player.movement.x<= tile.position.x + tile.width) {
       // console.log('this should log if we are touching a wall')
-      instructions.innerText= 'You Won!'
         player.bumpSound.play()
         player.movement.x = 0
         player.movement.y =0
@@ -260,9 +259,10 @@ foods.forEach((food,index) => {
       // win condition
       // console.log('should log win message when everything is collected', 'you win')
        if (foods.length === 0) {
-         player.winSound.play()
+        player.winSound.play()
           button.style.display === "none"
           button.style.display = "inline"
+          instructions.innerText= 'You Won!'
        cancelAnimationFrame(gameAnimation)
        alert(`You Won!, Final score of ${score.innerText}`)
        instructions.innerText= 'Congratulations! You won!'
@@ -353,3 +353,5 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   })
 })
+
+
