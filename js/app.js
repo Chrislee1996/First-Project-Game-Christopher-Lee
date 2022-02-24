@@ -334,7 +334,8 @@ enemies2.forEach(enemy2=> {
 //title screen
 //this will listen for a 'click' - once done,  our game will run
 document.addEventListener('click', (event) => {
-  gameLoop()
+  // gameLoop()
+  setInterval(gameLoop(),60)
   canvas.style.display = 'block'
   intro.innerText = ''
   startButton.style.display ='none'
