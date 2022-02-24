@@ -4,28 +4,26 @@ body {
 }
 
 
-#top-left {
+#gametitle {
   font-size: 50px;
   color: yellow;
+  font-family: 'Dancing Script', cursive;
 }
 
 #scoreElement{
-  font-size: 25px;
+  font-size: 55px;
   color: yellow;
+  font-family: 'Dancing Script', cursive;
 }
 
 #canvas {
   background-color: rgb(17, 16, 16);
 }
 
-#status{
-  background-color: rgb(16, 21, 26);
-  border: 2px black solid;
-  font-size: 30px;
-}
 
 #scoreElement {
   display:none;
+  font-family: 'Dancing Script', cursive;
 }
 
 #score {
@@ -33,6 +31,7 @@ body {
   color: white;
   font-size: 50px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Dancing Script', cursive;
 }
 
 #hidden {
@@ -43,10 +42,12 @@ body {
   background-color: rgb(16, 21, 26);
   font-size: 100px;
   cursor: pointer;
+  font-family: 'Dancing Script', cursive;
 }
 
 #instructions {
   color: white;
+  font-family: 'Dancing Script', cursive;
 }
 
 #intro {
@@ -55,7 +56,8 @@ body {
 
 #instructions {
   color: rgb(216, 216, 42);
-
+  font-family: 'Dancing Script', cursive;
+  font-size: 32px;
 }
 
 #startButton {
@@ -66,5 +68,6 @@ body {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 32px;
+  font-size: 64px;
+  font-family: 'Dancing Script', cursive;
 }
