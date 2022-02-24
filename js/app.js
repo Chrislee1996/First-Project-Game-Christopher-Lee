@@ -266,12 +266,9 @@ foods.forEach((food,index) => {
           player.winSound.play()
           score.style.display= 'none'
           scoreElement.style.display = 'none'
-          button.style.display === "none"
           button.style.display = "inline"
-          instructions.innerText= 'You Won!'
           cancelAnimationFrame(gameAnimation)
-         
-          instructions.innerText= `You Won!, Final score of ${score.innerText}`
+          instructions.innerText= `Congratulations, You Won!, Final score of ${score.innerText}`
           document.appendChild(instructions)
         } 
     }
