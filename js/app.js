@@ -6,11 +6,23 @@ const score = document.getElementById('score')
 const button = document.getElementById('hidden')
 const intro = document.querySelector('.intro')
 
+//game images
+const coin = new Image()
+coin.src='images/coin.png'
+
+const bricks = new Image()
+bricks.src = 'images/bricks.png'
+
+const ghosts = new Image()
+ghosts.src = 'images/ghost.png'
+
+const ghosts2 = new Image()
+ghosts2.src = 'images/ghost2.png'
+
+
 //build our gameboard 
 canvas.width = innerWidth
 canvas.height =innerHeight 
-
-
 
 class Board {
   constructor({position,image}) {
@@ -55,7 +67,7 @@ const foods = []
 //2 = food
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+  [0,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -63,7 +75,7 @@ const gameBoard = [
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0],
-  [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+  [0,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -71,14 +83,6 @@ const gameBoard = [
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ]
-const coin = new Image()
-coin.src='images/coin.png'
-
-const bricks = new Image()
-bricks.src = 'images/bricks.png'
-
-const ghosts = new Image()
-ghosts.src = 'images/ghost.png'
 
 gameBoard.forEach((row, index) => {
   row.forEach((number, j) => {
@@ -163,7 +167,7 @@ const player = new Player({
 class Enemy {
   constructor({position,color,movement,image}) {
     this.position = position
-    this.radius = 10
+    this.radius = 0
     this.color = color
     this.movement = movement
     this.image = image
@@ -221,7 +225,7 @@ const enemies2 = [
       x: 0,
       y:0
     },
-    image: ghosts
+    image: ghosts2
   })
 ]
 
@@ -246,6 +250,7 @@ const gameLoop = () => {
 
   
 foods.forEach((food,index) => {
+  
   food.render()
     //remove food when we touch it 
     if (((food.position.x - player.position.x)*(food.position.x - player.position.x )) + (( food.position.y - player.position.y)*( food.position.y - player.position.y)) < 
@@ -253,12 +258,12 @@ foods.forEach((food,index) => {
       foods.splice(index, 1)
       player.collectSound.play()
       // console.log('this will notify us that we are touching the food')
-      points +=5
+      points +=15
       score.innerText = points
       // win condition
       // console.log('should log win message when everything is collected', 'you win')
        if (foods.length === 0) {
-        player.winSound.play()
+          player.winSound.play()
           button.style.display === "none"
           button.style.display = "inline"
           instructions.innerText= 'You Won!'
@@ -294,9 +299,9 @@ enemies.forEach(enemy=> {
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy','you lost'
+    player.deathSound.play()
     button.style.display === "none"
     button.style.display = "inline"
-    player.deathSound.play()
     cancelAnimationFrame(gameAnimation)
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
     instructions.innerText= 'You Lost, Better luck next time!'
@@ -325,9 +330,9 @@ enemies2.forEach(enemy2=> {
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
   (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy', 'you lost')
+    player.deathSound.play()
     button.style.display === "none"
     button.style.display = "inline"
-    player.deathSound.play()
     cancelAnimationFrame(gameAnimation)
     alert(`Oh no, you died!, Final score of ${score.innerText}`)
     instructions.innerText= 'You Lost, Better luck next time!'
