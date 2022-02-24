@@ -62,8 +62,9 @@ const gameBoard = [
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -156,8 +157,7 @@ const player = new Player({
 })
 
 //need to add moveset for our AI
-// let dx = 2
-// let dy = 2
+
 
 //add our enemies - same constructors as our player but will have different color 
 class Enemy {
@@ -214,7 +214,7 @@ const enemies = [
 const enemies2 = [
   new Enemy({
     position: {
-      x:200,
+      x:100,
       y:800
     },
     movement: {
@@ -240,7 +240,7 @@ const gameLoop = () => {
       // console.log('this should log if we are touching a wall')
         player.bumpSound.play()
         player.movement.x = 0
-        player.movement.y =0
+        player.movement.y = 0
       }
   })
 
@@ -253,7 +253,7 @@ foods.forEach((food,index) => {
       foods.splice(index, 1)
       player.collectSound.play()
       // console.log('this will notify us that we are touching the food')
-      points +=10
+      points +=5
       score.innerText = points
       // win condition
       // console.log('should log win message when everything is collected', 'you win')
@@ -284,10 +284,10 @@ enemies.forEach(enemy=> {
   //     && enemy.position.x + enemy.radius + enemy.movement.x >= tile.position.x 
   //     && enemy.position.y + enemy.radius +enemy.movement.y>= tile.position.y 
   //     && enemy.position.x - enemy.radius + enemy.movement.x<= tile.position.x + tile.width) {
-  //       console.log('ghost x coordinates', enemy.movement.x)
-  //       console.log('ghost y coordinates', enemy.movement.y)
-  //       enemy.movement.x = Math.random() * 2;
-  //       enemy.movement.y = Math.random() * 2;
+  //       // enemy.movement.x = Math.random() * 2;
+  //       // enemy.movement.y = Math.random() * 2;
+  //       enemy.movement.x = 0
+  //       enemy.movement.y = 0
   //     }
   // })
 
@@ -307,17 +307,19 @@ enemies.forEach(enemy=> {
 enemies2.forEach(enemy2=> {
   enemy2.update()
 
- //this will prevent the ghost from colliding via the walls 
-  // tiles.forEach((tile) => {
-  //   tile.render()
-  //     if (enemy2.position.y - enemy2.radius + enemy2.movement.y <= tile.position.y + tile.height 
-  //     && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
-  //     && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
-  //     && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
-  //       enemy2.movement.x = Math.random() * 2;
-  //       enemy2.movement.y = Math.random() * 2;
-  //     }
-  // })
+ 
+//  this will prevent the ghost from colliding via the walls 
+  tiles.forEach((tile) => {
+    tile.render()
+      if (enemy2.position.y - enemy2.radius + enemy2.movement.y <= tile.position.y + tile.height 
+      && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
+      && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
+      && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
+        // enemy2.movement.x = Math.random() * 2;
+        // enemy2.movement.y = Math.random() * 2;
+        enemy2.movement.y = Math.random() * 2
+      } 
+  })
 
 
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
