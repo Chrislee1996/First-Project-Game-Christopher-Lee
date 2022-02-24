@@ -46,7 +46,7 @@ class Board {
 class Food {
   constructor({position,image}) {
     this.position = position
-    this.radius = 12
+    this.radius = 500
     this.image = image
   }
   render = function() {
@@ -263,6 +263,7 @@ foods.forEach((food,index) => {
       // win condition
       // console.log('should log win message when everything is collected', 'you win')
        if (foods.length === 0) {
+          canvas.style.display = 'none'
           player.winSound.play()
           score.style.display= 'none'
           scoreElement.style.display = 'none'
