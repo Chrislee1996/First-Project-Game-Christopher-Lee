@@ -24,7 +24,12 @@ body {
   font-size: 30px;
 }
 
+#scoreElement {
+  display:none;
+}
+
 #score {
+  display:none;
   color: white;
   font-size: 50px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -46,6 +51,11 @@ body {
 
 #intro {
   color: white;
+}
+
+#instructions {
+  color: rgb(216, 216, 42);
+
 }
 
 #startButton {

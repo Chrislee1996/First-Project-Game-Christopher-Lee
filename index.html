@@ -9,21 +9,18 @@
 </head>
 <body>
 
-
-
-
-
     <div id="container">
         <div id="startScreen">
-            <aside id="top-left"><h2>Pac Man</h2></aside>
-            <h3 id ='intro'>Instructions: collect all the mushrooms while avoiding the ghost! Use WASD to move your player</h3>
+            <aside id="top-left"><h2>Pac-Man</h2></aside>
+            <h1 id ='intro'>Instructions: collect all the mushrooms while avoiding the ghost! Use WASD to move your player</h1>
             <span> <h2 id = 'scoreElement'>  Score: </h2>   <span id ='score'>0</span> </span>
-            <h3 id="instructions"></h3>
+            <h1 id="instructions"></h1>
                 <main>
                     <div> 
-                        <input id="startButton" type="button" value="Click to play!"/>
+                        <input id="startButton" type="button" value="Click to start chomping!"/>
                     </div>
-                    <button onClick="window.location.reload();" id = 'hidden'>Play Again!</button>
+                    <button onClick="window.location.reload();" id = 'hidden'>Back to Title page</button>
+                    <img id = 'Title-screen' src ='images/intro.png' alt="Logo-screen">
                     <canvas id="canvas" style="display: none"></canvas>
                 </main>
         </div>
