@@ -48,7 +48,7 @@ class Board {
 class Food {
   constructor({position,image}) {
     this.position = position
-    this.radius = 12
+    this.radius = 15
     this.image = image
   }
   render = function() {
