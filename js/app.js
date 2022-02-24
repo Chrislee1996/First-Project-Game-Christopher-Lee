@@ -96,17 +96,17 @@ gameBoard.forEach((row, index) => {
           image: bricks
         })
       )
-        break
-          case 2:
-            foods.push(new Food({
-              position: {
-                x: 60 * j,
-                y: 60 * index
-              },
-              image: coin
-            })
-          )
-          break
+    break
+      case 2:
+        foods.push(new Food({
+            position: {
+              x: 60 * j,
+              y: 60 * index
+          },
+          image: coin
+        })
+      )
+      break
     }
   })
 })
@@ -160,14 +160,12 @@ const player = new Player({
   }
 })
 
-//need to add moveset for our AI
-
 
 //add our enemies - same constructors as our player but will have different color 
 class Enemy {
   constructor({position,color,movement,image}) {
     this.position = position
-    this.radius = 0
+    this.radius = 10
     this.color = color
     this.movement = movement
     this.image = image
@@ -247,10 +245,9 @@ const gameLoop = () => {
         player.movement.y = 0
       }
   })
+//end of player collision
 
-  
 foods.forEach((food,index) => {
-  
   food.render()
     //remove food when we touch it 
     if (((food.position.x - player.position.x)*(food.position.x - player.position.x )) + (( food.position.y - player.position.y)*( food.position.y - player.position.y)) < 
@@ -268,13 +265,13 @@ foods.forEach((food,index) => {
           button.style.display = "inline"
           instructions.innerText= 'You Won!'
           cancelAnimationFrame(gameAnimation)
-          alert(`You Won!, Final score of ${score.innerText}`)
-          instructions.innerText= 'Congratulations! You won!'
+         
+          instructions.innerText= `You Won!, Final score of ${score.innerText}`
           document.appendChild(instructions)
-         } 
-      //populates button to play game again
+        } 
     }
 })
+//end of eating food 
 
 //spawn our player
 player.update() 
@@ -295,7 +292,6 @@ enemies.forEach(enemy=> {
   //       enemy.movement.y = 0
   //     }
   // })
-
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy','you lost'
@@ -303,16 +299,13 @@ enemies.forEach(enemy=> {
     button.style.display === "none"
     button.style.display = "inline"
     cancelAnimationFrame(gameAnimation)
-    alert(`Oh no, you died!, Final score of ${score.innerText}`)
-    instructions.innerText= 'You Lost, Better luck next time!'
+    instructions.innerText= `Oh no, you died!, Final score of ${score.innerText}`
     document.appendChild(instructions)
   }
 })
-
 enemies2.forEach(enemy2=> {
   enemy2.update()
 
- 
 //  this will prevent the ghost from colliding via the walls 
   tiles.forEach((tile) => {
     tile.render()
@@ -326,7 +319,6 @@ enemies2.forEach(enemy2=> {
       } 
   })
 
-
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
   (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy', 'you lost')
@@ -334,8 +326,7 @@ enemies2.forEach(enemy2=> {
     button.style.display === "none"
     button.style.display = "inline"
     cancelAnimationFrame(gameAnimation)
-    alert(`Oh no, you died!, Final score of ${score.innerText}`)
-    instructions.innerText= 'You Lost, Better luck next time!'
+    instructions.innerText= `Oh no, you died!, Final score of ${score.innerText}`
     document.appendChild(instructions)
   }
 })
@@ -349,7 +340,7 @@ enemies2.forEach(enemy2=> {
 
 
 
-
+//add movement to player when key is pressed
 document.addEventListener('DOMContentLoaded', (e) => {
  
   alert("When ready, click play!")
