@@ -272,7 +272,7 @@ foods.forEach((food,index) => {
           canvas.remove()
           winLogo.style.display = 'inline'
           cancelAnimationFrame(gameAnimation)
-          instructions.innerText= `Congratulations, You Won!, Final score of ${score.innerText}`
+          instructions.innerText= `Congratulations, You Won!, Final score of: ${score.innerText}`
           document.appendChild(instructions)
         } 
     }
@@ -296,7 +296,7 @@ enemies.forEach(enemy=> {
     lostLogo.style.display = 'inline'
     cancelAnimationFrame(gameAnimation)
     const lostScreen = lostLogo.style.display = 'inline'
-    instructions.innerText= `Better luck next time! Final score of ${score.innerText}`
+    instructions.innerText= `Better luck next time! Final score of: ${score.innerText}`
     document.appendChild(instructions)
   }
 })
@@ -326,7 +326,7 @@ enemies2.forEach(enemy2=> {
     scoreElement.style.display = 'none'
     cancelAnimationFrame(gameAnimation)
     const lostScreen = lostLogo.style.display = 'inline'
-    instructions.innerText= `Better luck next time! Final score of ${score.innerText}`
+    instructions.innerText= `Better luck next time! Final score of: ${score.innerText}`
     document.appendChild(instructions)
   }
 })
