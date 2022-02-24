@@ -14,7 +14,7 @@
 - game over screen shall display with game over message with total points obtained 
 - Ghost AI will follow player
 - Ghost should be able to collide with player 
-- Ghost will be able to go through walls/borders
+- Certain ghost will be able to go through walls/borders
 - If all food is gone, player wins
 - game over - Gameover screen should display total points player has
 - There should be a play again button
