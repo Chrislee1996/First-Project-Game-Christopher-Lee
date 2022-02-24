@@ -16,6 +16,7 @@
             <aside id="gametitle"><h2>PAC-MAN!</h2></aside>
             <h1 id ='intro'>Instructions: collect all the mushrooms while avoiding the ghost! Use WASD to move your player</h1>
             <span> <h2 id = 'scoreElement'> Score: </h2><span id ='score'>0</span> </span>
+            <img id ='lostLogo' src = 'images/lostLogo.png' alt="You've lost!">
             <h1 id="instructions"></h1>
                 <main>
                     <div> 
@@ -23,7 +24,8 @@
                     </div>
                     <button onClick="window.location.reload();" id = 'hidden'>Back to Title Screen</button>
                     <img id = 'Title-screen' src ='images/intro.png' alt="Logo-screen">
-                    <canvas id="canvas" style="display: none"></canvas>
+                    <canvas id="canvas" style="display: none" ></canvas>
+                    <img id ='winLogo' src = 'images/winLogo.png' alt="You've Won!">
                 </main>
         </div>
     </div>

@@ -71,3 +71,7 @@ body {
   font-size: 64px;
   font-family: 'Dancing Script', cursive;
 }
+
+#winLogo,#lostLogo {
+  display: none;
+}

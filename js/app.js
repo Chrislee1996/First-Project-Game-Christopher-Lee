@@ -6,6 +6,8 @@ const score = document.getElementById('score')
 const button = document.getElementById('hidden')
 const startButton = document.getElementById('startButton')
 const title = document.getElementById('Title-screen')
+const winLogo = document.getElementById('winLogo')
+const lostLogo = document.getElementById('lostLogo')
 
 //game images
 const coin = new Image()
@@ -46,7 +48,7 @@ class Board {
 class Food {
   constructor({position,image}) {
     this.position = position
-    this.radius = 500
+    this.radius = 12
     this.image = image
   }
   render = function() {
@@ -263,11 +265,12 @@ foods.forEach((food,index) => {
       // win condition
       // console.log('should log win message when everything is collected', 'you win')
        if (foods.length === 0) {
-          canvas.style.display = 'none'
           player.winSound.play()
           score.style.display= 'none'
           scoreElement.style.display = 'none'
           button.style.display = "inline"
+          canvas.remove()
+          winLogo.style.display = 'inline'
           cancelAnimationFrame(gameAnimation)
           instructions.innerText= `Congratulations, You Won!, Final score of ${score.innerText}`
           document.appendChild(instructions)
@@ -290,8 +293,10 @@ enemies.forEach(enemy=> {
     button.style.display = "inline"
     score.style.display= 'none'
     scoreElement.style.display = 'none'
+    lostLogo.style.display = 'inline'
     cancelAnimationFrame(gameAnimation)
-    instructions.innerText= `Oh no, you died!, Final score of ${score.innerText}`
+    const lostScreen = lostLogo.style.display = 'inline'
+    instructions.innerText= `Better luck next time! Final score of ${score.innerText}`
     document.appendChild(instructions)
   }
 })
@@ -320,7 +325,8 @@ enemies2.forEach(enemy2=> {
     score.style.display= 'none'
     scoreElement.style.display = 'none'
     cancelAnimationFrame(gameAnimation)
-    instructions.innerText= `Oh no, you died!, Final score of ${score.innerText}`
+    const lostScreen = lostLogo.style.display = 'inline'
+    instructions.innerText= `Better luck next time! Final score of ${score.innerText}`
     document.appendChild(instructions)
   }
 })
@@ -335,15 +341,14 @@ enemies2.forEach(enemy2=> {
 //title screen
 //this will listen for a 'click' - once done,  our game will run
 document.addEventListener('click', (event) => {
-  // gameLoop()
-  setInterval(gameLoop(),60)
+  setInterval(gameLoop(),6000)
   canvas.style.display = 'block'
   intro.innerText = ''
   startButton.style.display ='none'
   title.style.display= 'none'
   score.style.display= 'block'
   scoreElement.style.display= 'block'
-})
+}, {once:true})
 
 
 
