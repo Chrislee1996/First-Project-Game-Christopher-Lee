@@ -9,20 +9,26 @@
 </head>
 <body>
 
+
+
+
+
     <div id="container">
         <div id="startScreen">
-        <aside id="top-left"><h2>Pac Man</h2></aside>
-        <h3 id ='intro'>Instructions: collect all the mushrooms while avoiding the ghost! Use WASD to move your player</h3>
-        <span> <h2 id = 'scoreElement'>  Score: </h2>   <span id ='score'>0</span> </span>
-        <h3 id="instructions"></h3>
-        <main>
-            <button onClick="window.location.reload();" id = 'hidden'>Play again</button>
-            <canvas id="canvas" ></canvas>
-
-        </main>
-
-      </div>
+            <aside id="top-left"><h2>Pac Man</h2></aside>
+            <h3 id ='intro'>Instructions: collect all the mushrooms while avoiding the ghost! Use WASD to move your player</h3>
+            <span> <h2 id = 'scoreElement'>  Score: </h2>   <span id ='score'>0</span> </span>
+            <h3 id="instructions"></h3>
+                <main>
+                    <div> 
+                        <input id="startButton" type="button" value="Click to play!"/>
+                    </div>
+                    <button onClick="window.location.reload();" id = 'hidden'>Play Again!</button>
+                    <canvas id="canvas" style="display: none"></canvas>
+                </main>
+        </div>
     </div>
+
     <script src="js/app.js"></script>
 </body>
 </html>

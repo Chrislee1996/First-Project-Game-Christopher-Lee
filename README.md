@@ -27,7 +27,7 @@
 >Players goal is to collect all  gold coins while avoiding these ghost. Score with be shown.
 
 ![](images/IMG_1486.jpg)
->Players should not be able to go through blocks - AI will be able to 
+>Players should not be able to go through blocks - certain AI will be able to go through walls 
 
 ![](images/IMG_1487.jpg)
 >If player comes to contact with any ghost, they die

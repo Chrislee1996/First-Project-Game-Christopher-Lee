@@ -4,6 +4,7 @@ const instructions = document.getElementById('instructions')
 const ctx = canvas.getContext('2d')
 const score = document.getElementById('score')
 const button = document.getElementById('hidden')
+const startButton = document.getElementById('startButton')
 
 
 //game images
@@ -18,6 +19,8 @@ ghosts.src = 'images/ghost.png'
 
 const ghosts2 = new Image()
 ghosts2.src = 'images/ghost2.png'
+
+
 
 
 //build our gameboard 
@@ -279,19 +282,6 @@ player.update()
 //spawns our enemies
 enemies.forEach(enemy=> {
   enemy.update()
-  //this will prevent the ghost from colliding via the walls 
-  // tiles.forEach((tile) => {
-  //   tile.render()
-  //     if (enemy.position.y - enemy.radius + enemy.movement.y <= tile.position.y + tile.height 
-  //     && enemy.position.x + enemy.radius + enemy.movement.x >= tile.position.x 
-  //     && enemy.position.y + enemy.radius +enemy.movement.y>= tile.position.y 
-  //     && enemy.position.x - enemy.radius + enemy.movement.x<= tile.position.x + tile.width) {
-  //       // enemy.movement.x = Math.random() * 2;
-  //       // enemy.movement.y = Math.random() * 2;
-  //       enemy.movement.x = 0
-  //       enemy.movement.y = 0
-  //     }
-  // })
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
   (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy','you lost'
@@ -338,12 +328,27 @@ enemies2.forEach(enemy2=> {
 //end of game loop
 
 
+//title screen
 
+
+document.addEventListener('click', (event) => {
+  gameLoop()
+  canvas.style.display = 'block'
+  intro.innerText = ''
+  startButton.style.display ='none'
+})
+
+
+
+// $("#StartButton").click(function () {
+//   $("#SplashScreen").hide();
+//   $("#GameCanvas").show();
+// });
 
 //add movement to player when key is pressed
 document.addEventListener('DOMContentLoaded', (e) => {
  
-  gameLoop()
+  // gameLoop()
   addEventListener('keydown', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
     switch (key.toLowerCase()) {
