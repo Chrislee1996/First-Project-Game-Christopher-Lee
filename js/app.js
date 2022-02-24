@@ -4,7 +4,7 @@ const instructions = document.getElementById('instructions')
 const ctx = canvas.getContext('2d')
 const score = document.getElementById('score')
 const button = document.getElementById('hidden')
-const intro = document.querySelector('.intro')
+
 
 //game images
 const coin = new Image()
@@ -343,10 +343,6 @@ enemies2.forEach(enemy2=> {
 //add movement to player when key is pressed
 document.addEventListener('DOMContentLoaded', (e) => {
  
-  alert("When ready, click play!")
-  setInterval(() => {
-    intro.classList.add('display-none')
-  },1)
   gameLoop()
   addEventListener('keydown', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
