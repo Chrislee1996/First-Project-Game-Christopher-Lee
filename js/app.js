@@ -8,6 +8,7 @@ const startButton = document.getElementById('startButton')
 const title = document.getElementById('Title-screen')
 const winLogo = document.getElementById('winLogo')
 const lostLogo = document.getElementById('lostLogo')
+const gametitle = document.getElementById('gametitle')
 
 //game images
 const coin = new Image()
@@ -26,10 +27,10 @@ const superfoodimage = new Image()
 superfoodimage.src = 'images/superfood.png'
 
 
-//build our gameboard 
-canvas.width = innerWidth
-canvas.height =innerHeight 
-
+  ctx.canvas.width  = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
+  
+ 
 class Board {
   constructor({position,image}) {
     this.position = position
@@ -106,7 +107,6 @@ const gameBoard = [
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -416,8 +416,6 @@ enemies2.forEach((enemy2,index)=> {
   else if (player.movement.y < 0) player.rotation = Math.PI*1.5
 }
 //end of game loop
-
-
 //title screen
 //this will listen for a 'click' - once done,  our game will run
 document.addEventListener('click', (event) => {
@@ -427,6 +425,7 @@ document.addEventListener('click', (event) => {
   startButton.style.display ='none'
   title.style.display= 'none'
   score.style.display= 'block'
+  gametitle.style.display='none'
   scoreElement.style.display= 'block'
 }, {once:true})
 
