@@ -68,7 +68,7 @@ class Food {
 class Superfood {
   constructor({position,image}) {
     this.position = position
-    this.radius = 10
+    this.radius = 15
     this.image = image
   }
   render = function() {
@@ -94,24 +94,22 @@ const superFoods = []
 //2 = food
 //5 = superfood
 const gameBoard = [
-  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,0],
-  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,5,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0],
-  [0,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,1,0,0],
+  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,5,1,0],
+  [0,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,0,1,0,0],
+  [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ]
 
 gameBoard.forEach((row, index) => {
@@ -270,6 +268,39 @@ const enemies2 = [
 ]
 
 
+
+const enemies3 = [
+  new Enemy({
+    position: {
+      x:400,
+      y:800
+    },
+    movement: {
+      x: 0,
+      y:0
+    },
+    image: ghosts2
+  })
+]
+
+
+
+const enemies4 = [
+  new Enemy({
+    position: {
+      x:500,
+      y:800
+    },
+    movement: {
+      x: 0,
+      y:0
+    },
+    image: ghosts2
+  })
+]
+
+
+
 // the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
 const gameLoop = () => {
   let gameAnimation = requestAnimationFrame(gameLoop)
@@ -321,6 +352,8 @@ superFoods.forEach((superFood,index) => {
   superFood.render()
   if (((superFood.position.x - player.position.x)*(superFood.position.x - player.position.x )) + (( superFood.position.y - player.position.y)*( superFood.position.y - player.position.y)) < 
     (superFood.radius + player.radius) * (superFood.radius + player.radius)) {
+      points -=15
+      score.innerText = points
       superFoods.splice(index, 1)
       //after superfood is eaten, sound will play for ~9.9 seconds to tell player we are unkillable
       let counter = 10
@@ -336,14 +369,12 @@ superFoods.forEach((superFood,index) => {
         enemy.eatten = true 
         setTimeout(() => {
           enemy.eatten = false
-          console.log(enemy.eatten)
         },5000)
       })
       enemies2.forEach(enemy2 => {
         enemy2.eatten = true 
         setTimeout(() => {
           enemy2.eatten = false
-          console.log(enemy2.eatten)
         },5000)
       })
 
@@ -362,6 +393,8 @@ enemies.forEach((enemy,index)=> {
     // console.log('this should log a message when we touch an enemy','you lost'
     if (enemy.eatten) {
       enemies.splice(index,1)
+      points -=50
+      score.innerText = points
     } else {
     player.deathSound.play()
     button.style.display === "none"
