@@ -328,7 +328,7 @@ superFoods.forEach((superFood,index) => {
         },10000)
       })
 
-      enemies.forEach(enemy2 => {
+      enemies2.forEach(enemy2 => {
         enemy2.eatten = true 
         points +=15
         setTimeout(() => {
