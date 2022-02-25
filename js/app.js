@@ -61,15 +61,36 @@ class Food {
     // ctx.fillStyle = 'white'
   }
 }
+
+//superfood 
+class Superfood {
+  constructor({position,image}) {
+    this.position = position
+    this.radius = 10
+    this.image = image
+  }
+  render = function() {
+    ctx.beginPath()
+    // ctx.drawImage(this.image, this.position.x,this.position.y)
+    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    ctx.fillStyle = 'white'
+    ctx.fill()
+    ctx.closePath()
+
+  }
+}
+
+
 //create and set our  score var
 let points = 0
 const tiles =[]
 const foods = []
-
+const superFoods = []
 
 //0 = container
 //1 = blank
 //2 = food
+//5 = superfood
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -77,7 +98,7 @@ const gameBoard = [
   [0,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,5,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -107,6 +128,16 @@ gameBoard.forEach((row, index) => {
     break
       case 2:
         foods.push(new Food({
+            position: {
+              x: 60 * j,
+              y: 60 * index
+          },
+          image: coin
+        })
+      )
+      break
+      case 5:
+        foods.push(new Superfood({
             position: {
               x: 60 * j,
               y: 60 * index
