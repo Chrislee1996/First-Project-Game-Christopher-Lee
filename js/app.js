@@ -25,12 +25,10 @@ ghosts2.src = 'images/ghost2.png'
 
 const superfoodimage = new Image()
 superfoodimage.src = 'images/superfood.png'
-
-
-  ctx.canvas.width  = window.innerWidth;
-  ctx.canvas.height = window.innerHeight;
-  
- 
+//set our website 
+ctx.canvas.width  = window.innerWidth;
+ctx.canvas.height = window.innerHeight;
+//our board 
 class Board {
   constructor({position,image}) {
     this.position = position
@@ -63,7 +61,6 @@ class Food {
     // ctx.fillStyle = 'white'
   }
 }
-
 //superfood 
 class Superfood {
   constructor({position,image}) {
@@ -81,7 +78,6 @@ class Superfood {
     // ctx.fillStyle = 'white'
   }
 }
-
 
 //create and set our  score var
 let points = 0
@@ -149,7 +145,6 @@ gameBoard.forEach((row, index) => {
   })
 })
 
-
 //create our player -use the class syntax with a constructor
 class Player {
   constructor({position,movement}) {
@@ -198,7 +193,6 @@ const player = new Player({
     y:0
   }
 })
-
 
 //add our enemies - same constructors as our player but will have different color 
 class Enemy {
@@ -347,7 +341,6 @@ superFoods.forEach((superFood,index) => {
 
     }
 })
-
 //spawn our player
 player.update() 
 
@@ -409,6 +402,7 @@ enemies2.forEach((enemy2,index)=> {
     }
   }
 })
+//this gives our pacman the chomping motion
   if      (player.movement.x > 0) player.rotation = 0 
   else if (player.movement.x < 0) player.rotation = Math.PI
   else if (player.movement.y > 0) player.rotation = Math.PI/2
@@ -427,8 +421,6 @@ document.addEventListener('click', (event) => {
   gametitle.style.display='none'
   scoreElement.style.display= 'block'
 }, {once:true})
-
-
 
 //add movement to player when key is pressed
 document.addEventListener('DOMContentLoaded', (e) => {
