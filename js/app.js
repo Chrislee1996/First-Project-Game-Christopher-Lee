@@ -64,19 +64,17 @@ class Food {
 
 //superfood 
 class Superfood {
-  constructor({position,image}) {
+  constructor({position}) {
     this.position = position
     this.radius = 10
-    this.image = image
   }
   render = function() {
     ctx.beginPath()
     // ctx.drawImage(this.image, this.position.x,this.position.y)
     ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-    ctx.fillStyle = 'white'
+    ctx.fillStyle = 'blue'
     ctx.fill()
     ctx.closePath()
-
   }
 }
 
@@ -94,11 +92,11 @@ const superFoods = []
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,5,2,2,0],
   [0,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,5,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -137,12 +135,11 @@ gameBoard.forEach((row, index) => {
       )
       break
       case 5:
-        foods.push(new Superfood({
+        superFoods.push(new Superfood({
             position: {
               x: 60 * j,
               y: 60 * index
           },
-          image: coin
         })
       )
       break
@@ -208,9 +205,10 @@ class Enemy {
     this.color = color
     this.movement = movement
     this.image = image
+    this.eatten = false
   }
   render = function() {
-    ctx.drawImage(this.image, this.position.x,this.position.y)
+    ctx.drawImage(this.image, this.position.x,this.position.y )
     ctx.beginPath()
     ctx.fill()
     ctx.closePath()
@@ -313,6 +311,36 @@ foods.forEach((food,index) => {
 })
 //end of eating food 
 
+//eating super food 
+superFoods.forEach((superFood,index) => {
+  superFood.render()
+  if (((superFood.position.x - player.position.x)*(superFood.position.x - player.position.x )) + (( superFood.position.y - player.position.y)*( superFood.position.y - player.position.y)) < 
+    (superFood.radius + player.radius) * (superFood.radius + player.radius)) {
+      superFoods.splice(index, 1)
+      player.collectSound.play() 
+      //after superfood is eaten = action for enemies
+      enemies.forEach(enemy => {
+        enemy.eatten = true 
+        points +=15
+        setTimeout(() => {
+          enemy.eatten = false
+          console.log(enemy.eatten)
+        },10000)
+      })
+
+      enemies.forEach(enemy2 => {
+        enemy2.eatten = true 
+        points +=15
+        setTimeout(() => {
+          enemy2.eatten = false
+          console.log(enemy2.eatten)
+        },10000)
+      })
+
+
+    }
+})
+
 //spawn our player
 player.update() 
 
@@ -320,7 +348,7 @@ player.update()
 enemies.forEach(enemy=> {
   enemy.update()
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
-  (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
+  (enemy.radius + player.radius) * (enemy.radius + player.radius && !enemy.eatten)) {
     // console.log('this should log a message when we touch an enemy','you lost'
     player.deathSound.play()
     button.style.display === "none"
@@ -334,6 +362,8 @@ enemies.forEach(enemy=> {
     document.appendChild(instructions)
   }
 })
+
+
 enemies2.forEach(enemy2=> {
   enemy2.update()
 
@@ -344,14 +374,12 @@ enemies2.forEach(enemy2=> {
       && enemy2.position.x + enemy2.radius + enemy2.movement.x >= tile.position.x 
       && enemy2.position.y + enemy2.radius +enemy2.movement.y>= tile.position.y 
       && enemy2.position.x - enemy2.radius + enemy2.movement.x<= tile.position.x + tile.width) {
-        // enemy2.movement.x = Math.random() * 2;
-        // enemy2.movement.y = Math.random() * 2;
         enemy2.movement.y = Math.random() * 2
       } 
   })
 
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
-  (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
+  (enemy2.radius + player.radius) * (enemy2.radius + player.radius && !enemy2.eatten)) {
     // console.log('this should log a message when we touch an enemy', 'you lost')
     player.deathSound.play()
     button.style.display === "none"
