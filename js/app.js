@@ -267,40 +267,6 @@ const enemies2 = [
   })
 ]
 
-
-
-const enemies3 = [
-  new Enemy({
-    position: {
-      x:400,
-      y:800
-    },
-    movement: {
-      x: 0,
-      y:0
-    },
-    image: ghosts2
-  })
-]
-
-
-
-const enemies4 = [
-  new Enemy({
-    position: {
-      x:500,
-      y:800
-    },
-    movement: {
-      x: 0,
-      y:0
-    },
-    image: ghosts2
-  })
-]
-
-
-
 // the gameloop function will basically allow the game to be a game (controlling what happens/when, movement/spawning items)
 const gameLoop = () => {
   let gameAnimation = requestAnimationFrame(gameLoop)
