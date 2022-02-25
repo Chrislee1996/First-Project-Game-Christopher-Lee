@@ -92,14 +92,14 @@ const superFoods = []
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,5,2,2,0],
+  [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-  [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+  [0,1,2,2,2,2,2,2,2,5,2,2,2,2,2,2,2,0],
   [0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,0],
@@ -161,6 +161,7 @@ class Player {
     this.deathSound = new Audio('sounds/deathSound.wav')
     this.winSound = new Audio('sounds/winSound.wav')
     this.bumpSound = new Audio('sounds/bump.wav')
+    this.unkillable = new Audio('sounds/unkillable.wav')
   }
   render = function() {
     ctx.save()
@@ -317,24 +318,30 @@ superFoods.forEach((superFood,index) => {
   if (((superFood.position.x - player.position.x)*(superFood.position.x - player.position.x )) + (( superFood.position.y - player.position.y)*( superFood.position.y - player.position.y)) < 
     (superFood.radius + player.radius) * (superFood.radius + player.radius)) {
       superFoods.splice(index, 1)
-      player.collectSound.play() 
-      //after superfood is eaten = action for enemies
+      //after superfood is eaten, sound will play for ~9.9 seconds to tell player we are unkillable
+      let counter = 10
+      const startSuperfood = setInterval(() => {
+        player.unkillable.play()
+        counter -=1 
+      }, 1000);
+      setTimeout(() => {
+        clearInterval(startSuperfood)
+      },4900)
+      //after superfood is eaten = action for what happens to enemies
       enemies.forEach(enemy => {
         enemy.eatten = true 
-        points +=15
         setTimeout(() => {
           enemy.eatten = false
           console.log(enemy.eatten)
-        },10000)
+        },5000)
       })
-
       enemies2.forEach(enemy2 => {
         enemy2.eatten = true 
-        points +=15
         setTimeout(() => {
+          
           enemy2.eatten = false
           console.log(enemy2.eatten)
-        },10000)
+        },5000)
       })
 
 
