@@ -22,7 +22,8 @@ ghosts.src = 'images/ghost.png'
 const ghosts2 = new Image()
 ghosts2.src = 'images/ghost2.png'
 
-
+const superfoodimage = new Image()
+superfoodimage.src = 'images/superfood.png'
 
 
 //build our gameboard 
@@ -64,17 +65,19 @@ class Food {
 
 //superfood 
 class Superfood {
-  constructor({position}) {
+  constructor({position,image}) {
     this.position = position
     this.radius = 10
+    this.image = image
   }
   render = function() {
     ctx.beginPath()
-    // ctx.drawImage(this.image, this.position.x,this.position.y)
-    ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-    ctx.fillStyle = 'blue'
+    ctx.drawImage(this.image, this.position.x,this.position.y)
     ctx.fill()
     ctx.closePath()
+    //if png for the coins is gone - back-up will be available via ctx arc/fillstyle
+    // ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    // ctx.fillStyle = 'white'
   }
 }
 
@@ -140,6 +143,7 @@ gameBoard.forEach((row, index) => {
               x: 60 * j,
               y: 60 * index
           },
+          image: superfoodimage
         })
       )
       break
@@ -338,7 +342,6 @@ superFoods.forEach((superFood,index) => {
       enemies2.forEach(enemy2 => {
         enemy2.eatten = true 
         setTimeout(() => {
-          
           enemy2.eatten = false
           console.log(enemy2.eatten)
         },5000)
@@ -352,11 +355,14 @@ superFoods.forEach((superFood,index) => {
 player.update() 
 
 //spawns our enemies
-enemies.forEach(enemy=> {
+enemies.forEach((enemy,index)=> {
   enemy.update()
   if (((enemy.position.x - player.position.x)*(enemy.position.x - player.position.x )) + (( enemy.position.y - player.position.y)*( enemy.position.y - player.position.y)) < 
-  (enemy.radius + player.radius) * (enemy.radius + player.radius && !enemy.eatten)) {
+  (enemy.radius + player.radius) * (enemy.radius + player.radius)) {
     // console.log('this should log a message when we touch an enemy','you lost'
+    if (enemy.eatten) {
+      enemies.splice(index,1)
+    } else {
     player.deathSound.play()
     button.style.display === "none"
     button.style.display = "inline"
@@ -367,13 +373,12 @@ enemies.forEach(enemy=> {
     const lostScreen = lostLogo.style.display = 'inline'
     instructions.innerText= `Better luck next time! Final score of: ${score.innerText}`
     document.appendChild(instructions)
+    }
   }
 })
 
-
-enemies2.forEach(enemy2=> {
+enemies2.forEach((enemy2,index)=> {
   enemy2.update()
-
 //  this will prevent the ghost from colliding via the walls 
   tiles.forEach((tile) => {
     tile.render()
@@ -386,7 +391,12 @@ enemies2.forEach(enemy2=> {
   })
 
   if (((enemy2.position.x - player.position.x)*(enemy2.position.x - player.position.x )) + (( enemy2.position.y - player.position.y)*( enemy2.position.y - player.position.y)) < 
-  (enemy2.radius + player.radius) * (enemy2.radius + player.radius && !enemy2.eatten)) {
+  (enemy2.radius + player.radius) * (enemy2.radius + player.radius)) {
+    //if enemy is touched they die if we have superfood
+    if (enemy2.eatten) {
+      enemies2.splice(index,1)
+      console.log(enemy2.eatten)
+    } else {
     // console.log('this should log a message when we touch an enemy', 'you lost')
     player.deathSound.play()
     button.style.display === "none"
@@ -397,6 +407,7 @@ enemies2.forEach(enemy2=> {
     const lostScreen = lostLogo.style.display = 'inline'
     instructions.innerText= `Better luck next time! Final score of: ${score.innerText}`
     document.appendChild(instructions)
+    }
   }
 })
   if      (player.movement.x > 0) player.rotation = 0 
