@@ -20,6 +20,10 @@ body {
   font-family: 'Dancing Script', cursive;
 }
 
+#container {
+  width: 1000px;
+  height: 1000px;
+}
 
 #canvas {
   background-color: rgb(16, 21, 26);
