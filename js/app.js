@@ -27,8 +27,8 @@ const superfoodimage = new Image()
 superfoodimage.src = 'images/superfood.png'
 
 //set our website 
-ctx.canvas.width  = innerWidth
-ctx.canvas.height = innerHeight
+ctx.canvas.width  = 2500
+ctx.canvas.height = 2500
 
 //our board 
 class Board {
