@@ -1,3 +1,4 @@
+//This sets up our DOM man. - grabbing items from index 
 const canvas = document.getElementById('canvas')
 const instructions = document.getElementById('instructions')
 // we need to get the game's context, which will allows to specify where to put things and how big to make them
@@ -26,11 +27,11 @@ ghosts2.src = 'images/ghost2.png'
 const superfoodimage = new Image()
 superfoodimage.src = 'images/superfood.png'
 
-//set our website 
+//set our canvas 
 ctx.canvas.width  = 2000
 ctx.canvas.height = 2000
 
-//our board 
+//create a constructor for our board - set our width and height of our board to 60x60
 class Board {
   constructor({position,image}) {
     this.position = position
@@ -39,6 +40,7 @@ class Board {
     this.image = image
   }
   render = function() {
+    //this will create the walls using the image we create
     ctx.drawImage(this.image, this.position.x,this.position.y)
     //if the png for our bricks/walls are gone, this will server as a backup
     // ctx.fillStyle = 'blue'
@@ -63,7 +65,7 @@ class Food {
     // ctx.fillStyle = 'white'
   }
 }
-//superfood 
+//superfood - since it has basically the same principles as our food, we can copy and paste our food class
 class Superfood {
   constructor({position,image}) {
     this.position = position
@@ -81,7 +83,7 @@ class Superfood {
   }
 }
 
-//create and set our  score var
+//create and set our score variables and store them as arrays so we can push into the arrays after our loop
 let points = 0
 const tiles =[]
 const foods = []
@@ -91,6 +93,7 @@ const superFoods = []
 //1 = blank
 //2 = food
 //5 = superfood
+//create an array of arrays for our board 
 const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,0,0],
@@ -110,18 +113,25 @@ const gameBoard = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ]
 
+//iterate/loop into our ararys of arrays with a callback function
+//first we loop into the array 
 gameBoard.forEach((row, index) => {
+  //loop into the array of arrays
   row.forEach((number, j) => {
+    //create a switch statement - basically telling our code that for each case "whatever", we want to switch it and push one of our constructors into them 
     switch (number) {
       case 0:
         tiles.push(new Board({
           position: {
+            //since our board is 60x60, we can multiply by 'j' and 60 to create/push whatever we want into our array of arrays (ex. case 0 is our walls ) for our width
             x: 60 * j,
+            //same concept, since our board is 60x60, we can multiply by the index to get our height 
             y: 60 * index
           },
           image: bricks
         })
       )
+      //this works as above, if we want to import something new to our board, we just need a new case with the number of our new item
     break
       case 2:
         foods.push(new Food({
@@ -152,6 +162,7 @@ class Player {
   constructor({position,movement}) {
     this.position = position
     this.movement = movement
+    //this is basically setting up how our pac-man mouth moves 
     this.radius = 20
     this.rad = .75
     this.mouth = .040
@@ -163,6 +174,7 @@ class Player {
     this.unkillable = new Audio('sounds/unkillable.wav')
   }
   render = function() {
+      //this is basically setting up how our pac-man mouth moves and to get them to that ball like shape 
     ctx.save()
     ctx.translate(this.position.x, this.position.y)
     ctx.rotate(this.rotation)
@@ -185,6 +197,7 @@ class Player {
 }
 //end of player class
 
+//setting up our player position 
 const player = new Player({
   position: {
     x:550,
@@ -196,7 +209,7 @@ const player = new Player({
   }
 })
 
-//add our enemies - same constructors as our player but will have different color 
+//add our enemies - same constructors as our player but will have different color - since majority of our enemy and player share the same properties
 class Enemy {
   constructor({position,color,movement,image}) {
     this.position = position
@@ -211,6 +224,7 @@ class Enemy {
     ctx.beginPath()
     ctx.fill()
     ctx.closePath()
+    //this is how our enemies will follow pacman when spawn - if our player position is different than our enemy position via x or the y axis, they will follow our player (hence the +1)
     let diffX = player.position.x - this.position.x
     let diffY = player.position.y - this.position.y
     if (diffX > 0) {
@@ -235,6 +249,8 @@ class Enemy {
 }
 //end of enemy class
 
+
+//setting our enemy position up 
 const enemies = [
   new Enemy({
     position: {
