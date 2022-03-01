@@ -459,6 +459,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
           break
     }
   })
+  //this will stop our player/pacman when we released whatever key we pressed 
   addEventListener('keyup', ({key}) => {
     // console.log('should log what key has been pressed via keyboard', key)
     switch (key.toLowerCase()) {
