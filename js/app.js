@@ -28,8 +28,8 @@ const superfoodimage = new Image()
 superfoodimage.src = 'images/superfood.png'
 
 //set our canvas 
-ctx.canvas.width  = 2000
-ctx.canvas.height = 2000
+ctx.canvas.width  = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
 
 //create a constructor for our board - set our width and height of our board to 60x60
 class Board {
