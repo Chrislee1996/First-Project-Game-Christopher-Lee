@@ -27,15 +27,9 @@ ghosts2.src = 'images/ghost2.png'
 const superfoodimage = new Image()
 superfoodimage.src = 'images/superfood.png'
 
-<<<<<<< HEAD
 //set our website 
 ctx.canvas.width  = 1500
 ctx.canvas.height = 1500
-=======
-//set our canvas 
-canvas.width  = 1500;
-canvas.height = 1500;
->>>>>>> main
 
 //create a constructor for our board - set our width and height of our board to 60x60
 class Board {
