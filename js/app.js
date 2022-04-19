@@ -27,6 +27,7 @@ ghosts2.src = 'images/ghost2.png'
 const superfoodimage = new Image()
 superfoodimage.src = 'images/superfood.png'
 
+
 //set our website 
 ctx.canvas.width  = 1500
 ctx.canvas.height = 1500
